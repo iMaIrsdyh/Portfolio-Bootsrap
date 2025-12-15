@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Contact</title>
+    <meta name="description" content="Contact Karimah Irsyadiyah - Portfolio">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Contact - Karimah Irsyadiyah</title>
 
     <!-- link favicon icon -->
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
@@ -34,18 +32,17 @@
 
             <div class="container px-5">
 
-                <a class="navbar-brand" href="index.html"><span class="fw-bolder text-primary">MR-X</span></a>
+                <a class="navbar-brand" href="index.html"><span class="fw-bolder text-primary">iMa</span></a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span>
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
@@ -58,86 +55,318 @@
         <!-- Navigation section end-->
 
 
-        <!-- Page content section start-->
-
+        <!-- Page content section start -->
         <section class="py-5">
-
             <div class="container px-5">
+                <!-- Alert Messages -->
+                <div id="successAlert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    <strong>Success!</strong> Your message has been sent successfully. I'll get back to you soon!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
-                <!-- Contact form-->
-                <div class="bg-light rounded-4 py-5 px-4 px-md-5">
+                <div id="errorAlert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Error!</strong> <span id="errorMessage">Something went wrong. Please try again.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
-                    <div class="text-center mb-5">
-                        <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i
-                                class="bi bi-envelope"></i></div>
-                        <h1 class="fw-bolder">Get in touch</h1>
-                        <p class="lead fw-normal text-muted mb-0">Let's work together!</p>
+                <div id="warningAlert" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <strong>Warning!</strong> <span id="warningMessage">Please check your input.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Page Title -->
+                <div class="text-center mb-5">
+                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"
+                        style="width: 80px; height: 80px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-envelope fs-2"></i>
                     </div>
+                    <h1 class="fw-bolder">Get in Touch</h1>
+                    <p class="lead fw-normal text-muted mb-0">Let's work together on your next project!</p>
+                </div>
 
-                    <div class="row gx-5 justify-content-center">
+                <div class="row gx-5 justify-content-center mb-5">
+                    <!-- Contact Form -->
+                    <div class="col-lg-8 col-xl-6">
+                        <div class="bg-light rounded-4 py-5 px-4 px-md-5 shadow-sm reveal delay-1">
+                            <h4 class="fw-bold mb-4">
+                                <i class="bi bi-chat-dots me-2 text-primary"></i>Send Me a Message
+                            </h4>
 
-                        <div class="col-lg-8 col-xl-6">
+                            <form id="contactForm" novalidate>
 
-                            <form id="contactForm">
-
-                                <!-- Name input-->
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="name" type="text"
-                                        placeholder="Enter your name..." />
-                                    <label for="name">Full name</label>
+                                <!-- Name input -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-bold">
+                                        Full Name <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="name" type="text" placeholder="Enter your full name"
+                                        required />
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        Please provide your full name.
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
                                 </div>
 
-                                <!-- Email address input-->
-                                <div class="form-floating mb-3">
+                                <!-- Email input -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-bold">
+                                        Email Address <span class="text-danger">*</span>
+                                    </label>
                                     <input class="form-control" id="email" type="email"
-                                        placeholder="name@example.com" />
-                                    <label for="email">Email address</label>
+                                        placeholder="your.email@example.com" required />
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        Please provide a valid email address.
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
                                 </div>
 
-                                <!-- Phone number input-->
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" />
-                                    <label for="phone">Phone number</label>
+                                <!-- Phone input -->
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label fw-bold">
+                                        Phone Number <span class="text-danger">*</span>
+                                    </label>
+
+                                    <input class="form-control" id="phone" type="tel" placeholder="+1234567890" required
+                                        pattern="^\+[0-9\s\-()]{7,20}$" />
+
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        Please use international format (example: +6285174120405)
+                                    </div>
+
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
                                 </div>
 
-                                <!-- Message input-->
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="message" type="text"
-                                        placeholder="Enter your message here..." style="height: 10rem"></textarea>
-                                    <label for="message">Message</label>
+
+
+                                <!-- Subject select -->
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label fw-bold">
+                                        Subject <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="subject" required>
+                                        <option value="">-- Choose a subject --</option>
+                                        <option value="project-inquiry">Project Inquiry</option>
+                                        <option value="freelance-work">Freelance Work</option>
+                                        <option value="collaboration">Collaboration</option>
+                                        <option value="job-opportunity">Job Opportunity</option>
+                                        <option value="general-inquiry">General Inquiry</option>
+                                        <option value="feedback">Feedback</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        Please select a subject.
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
                                 </div>
+
+                                <!-- Message input -->
+                                <div class="mb-3">
+                                    <label for="message" class="form-label fw-bold">
+                                        Message <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" id="message" placeholder="Enter your message here..."
+                                        style="height: 150px;" minlength="10" required></textarea>
+                                    <small class="form-text text-muted mt-1">
+                                        Minimum 10 characters required
+                                    </small>
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        Please provide a message (at least 10 characters).
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
+                                </div>
+
+                                <!-- Terms checkbox -->
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required />
+                                    <label class="form-check-label" for="terms">
+                                        I agree to the
+                                        <a href="#!" class="text-primary text-decoration-none fw-bold">
+                                            terms and conditions
+                                        </a>
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        You must agree to the terms and conditions.
+                                    </div>
+                                    <div class="valid-feedback">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        MANTAP!
+                                    </div>
+                                </div>
+
+                                <!-- Submit button -->
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">
+                                        <i class="bi bi-send me-2"></i>
+                                        Send Message
+                                    </button>
+                                </div>
+
 
                             </form>
-
                         </div>
-
-                        <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
-                                type="submit">Submit</button>
-                        </div>
-
                     </div>
+                </div>
 
+                <!-- Contact Information Section -->
+                <div class="row gx-5 justify-content-center mb-5">
+                    <div class="col-lg-10 col-xl-9">
+                        <h3 class="fw-bold mb-4 text-center">
+                            <i class="bi bi-info-circle me-2 text-secondary"></i>Contact Information
+                        </h3>
+
+                        <div class="row g-4">
+                            <!-- Address -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card border-0 shadow-sm rounded-3 h-100 reveal delay-2">
+                                    <div class="card-body text-center p-4">
+                                        <div class="feature bg-secondary text-white rounded-3 mb-3"
+                                            style="width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-geo-alt fs-5"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-2">Address</h5>
+                                        <p class="text-muted small mb-0">
+                                            Padang, West Sumatra<br>Indonesia
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card border-0 shadow-sm rounded-3 h-100 reveal delay-3">
+                                    <div class="card-body text-center p-4">
+                                        <div class="feature bg-primary text-white rounded-3 mb-3"
+                                            style="width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-telephone fs-5"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-2">Phone</h5>
+                                        <p class="text-muted small mb-0">
+                                            <a href="tel:+6285174120405" class="text-decoration-none text-muted">+62 851
+                                                7412 0405</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card border-0 shadow-sm rounded-3 h-100 reveal delay-4">
+                                    <div class="card-body text-center p-4">
+                                        <div class="feature bg-success text-white rounded-3 mb-3"
+                                            style="width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi bi-envelope fs-5"></i>
+                                        </div>
+                                        <h5 class="fw-bold mb-2">Email</h5>
+                                        <p class="text-muted small mb-0">
+                                            <a href="mailto:karimahirsyadiyah@gmail.com"
+                                                class="text-decoration-none text-muted">karimahirsyadiyah@gmail.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="row gx-5 justify-content-center mb-5">
+                    <div class="col-lg-10 col-xl-9">
+                        <h3 class="fw-bold mb-4 text-center">
+                            <i class="bi bi-share me-2 text-info"></i>Follow Me on Social Media
+                        </h3>
+
+                        <div class="d-flex justify-content-center gap-3 flex-wrap reveal delay-3">
+                            <a href="https://www.instagram.com/ima_irsdyh/" target="_blank"
+                                class="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;" title="Instagram">
+                                <i class="bi bi-instagram fs-5"></i>
+                            </a>
+                            <a href="https://id.linkedin.com/in/karimah-irsyadiyah-1605092a5" target="_blank"
+                                class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;" title="LinkedIn">
+                                <i class="bi bi-linkedin fs-5"></i>
+                            </a>
+                            <a href="https://github.com/iMaIrsdyh" target="_blank"
+                                class="btn btn-outline-dark rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;" title="GitHub">
+                                <i class="bi bi-github fs-5"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank"
+                                class="btn btn-outline-info rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;" title="Twitter">
+                                <i class="bi bi-twitter fs-5"></i>
+                            </a>
+                            <a href="https://wa.me/6285174120405" target="_blank"
+                                class="btn btn-outline-success rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;" title="WhatsApp">
+                                <i class="bi bi-whatsapp fs-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps Embed -->
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-10 col-xl-9">
+                        <h3 class="fw-bold mb-4 text-center">
+                            <i class="bi bi-map me-2 text-danger"></i>Location
+                        </h3>
+                        <div class="rounded-3 overflow-hidden shadow-sm reveal delay-4" style="height: 400px;">
+                            <iframe
+                                src="https://www.google.com/maps?q=Jl.+Baru+Andalas+No.10,+Simpang+Haru,+Kec.+Padang+Tim.,+Kota+Padang,+Sumatera+Barat+25171&output=embed"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p class="text-muted small mb-0">
+                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                                Jl. Baru Andalas No.10 C, Simpang Haru, Kec. Padang Tim., Kota Padang, Sumatera Barat
+                                25171
+                            </p>
+                            <a href="https://www.google.com/maps/place/Jl.+Baru+Andalas+No.10,+Simpang+Haru,+Padang+Timur,+Padang,+Sumatera+Barat+25123/@-0.9396644,100.3612969,15z"
+                                target="_blank" class="btn btn-sm btn-outline-danger mt-2">
+                                <i class="bi bi-arrow-up-right me-1"></i>Open in Google Maps
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-
         </section>
-
-        <!-- Page content section start-->
+        <!-- Page content section end -->
 
     </main>
 
-
-
-
-
-    <!-- Footer section start-->
-
-    <footer class="bg-white py-4 mt-auto">
+    <!-- Footer section start -->
+    <footer class="bg-white py-4 mt-auto border-top">
         <div class="container px-5">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                 <div class="col-auto">
-                    <div class="small m-0">Copyright &copy; Your Website 2023</div>
+                    <div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div>
                 </div>
                 <div class="col-auto">
                     <a class="small" href="#!">Privacy</a>
@@ -149,16 +378,159 @@
             </div>
         </div>
     </footer>
+    <!-- Footer section end -->
 
-    <!-- Footer section end-->
-
-
-
-    <!-- link JavaScript fils using snd or download file -->
-    <!-- <script src="./js/bootstrap.bundle.js"></script> -->
+    <!-- Bootstrap bundle js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <!-- Contact Form Validation Script -->
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const submitButton = document.getElementById('submitButton');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const subjectSelect = document.getElementById('subject');
+        const messageInput = document.getElementById('message');
+        const termsCheckbox = document.getElementById('terms');
+
+        function showAlert(type, message = '') {
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
+            const warningAlert = document.getElementById('warningAlert');
+
+
+            successAlert.classList.add('d-none');
+            errorAlert.classList.add('d-none');
+            warningAlert.classList.add('d-none');
+
+            if (type === 'success') {
+                successAlert.classList.remove('d-none');
+            } else if (type === 'error') {
+                document.getElementById('errorMessage').textContent = message;
+                errorAlert.classList.remove('d-none');
+            } else if (type === 'warning') {
+                document.getElementById('warningMessage').textContent = message;
+                warningAlert.classList.remove('d-none');
+            }
+        }
+
+        function validateName() {
+            const isValid = nameInput.value.trim().length >= 3;
+            nameInput.classList.toggle('is-invalid', !isValid);
+            nameInput.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(emailInput.value.trim());
+            emailInput.classList.toggle('is-invalid', !isValid);
+            emailInput.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function validatePhone() {
+            const phoneRegex = /^(\+62|0)[0-9]{9,12}$/;
+            const isValid = phoneRegex.test(phoneInput.value.trim().replace(/\s/g, ''));
+            phoneInput.classList.toggle('is-invalid', !isValid);
+            phoneInput.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function validateSubject() {
+            const isValid = subjectSelect.value !== '';
+            subjectSelect.classList.toggle('is-invalid', !isValid);
+            subjectSelect.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function validateMessage() {
+            const isValid = messageInput.value.trim().length >= 10;
+            messageInput.classList.toggle('is-invalid', !isValid);
+            messageInput.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function validateTerms() {
+            const isValid = termsCheckbox.checked;
+            termsCheckbox.classList.toggle('is-invalid', !isValid);
+            termsCheckbox.classList.toggle('is-valid', isValid);
+            return isValid;
+        }
+
+        function checkFormValidity() {
+            const isValid = validateName() && validateEmail() && validatePhone() && validateSubject() && validateMessage() && validateTerms();
+            submitButton.disabled = !isValid;
+            return isValid;
+        }
+
+        // Add event listeners for real-time validation
+        nameInput.addEventListener('input', checkFormValidity);
+        emailInput.addEventListener('input', checkFormValidity);
+        phoneInput.addEventListener('input', checkFormValidity);
+        subjectSelect.addEventListener('change', checkFormValidity);
+        messageInput.addEventListener('input', checkFormValidity);
+        termsCheckbox.addEventListener('change', checkFormValidity);
+
+        // Form submission
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate all fields
+            if (!checkFormValidity()) {
+                showAlert('warning', 'Please fill all required fields correctly.');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                subject: subjectSelect.value,
+                message: messageInput.value.trim(),
+                timestamp: new Date().toISOString()
+            };
+
+            // Log form data (in real app, send to server)
+            console.log('Form Data:', formData);
+
+            // Simulate form submission
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+
+            // Simulate server delay
+            setTimeout(() => {
+                // Show success message
+                showAlert('success');
+
+                // Reset form
+                contactForm.reset();
+                contactForm.classList.remove('was-validated');
+                nameInput.classList.remove('is-valid', 'is-invalid');
+                emailInput.classList.remove('is-valid', 'is-invalid');
+                phoneInput.classList.remove('is-valid', 'is-invalid');
+                subjectSelect.classList.remove('is-valid', 'is-invalid');
+                messageInput.classList.remove('is-valid', 'is-invalid');
+                termsCheckbox.classList.remove('is-valid', 'is-invalid');
+
+                // Reset button
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="bi bi-send me-2"></i>Send Message';
+
+                // Hide alert after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successAlert').classList.add('d-none');
+                }, 5000);
+            }, 1500);
+        });
+
+        // Initialize button state
+        submitButton.disabled = true;
+    </script>
 
     <!-- link custom javascript file -->
     <script src="./js/javascript.js"></script>

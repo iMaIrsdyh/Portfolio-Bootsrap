@@ -1,112 +1,250 @@
 /* Custom CSS*/
 body,
 html {
-    height: 100%;
+  height: 100%;
 }
 .bg-gradient-primary-to-secondary {
-    background: #1e30f3;
-    background: linear-gradient(135deg, #1e30f3 0%, #e21e80 100%);
+  background: #1e30f3;
+  background: linear-gradient(135deg, #1e30f3 0%, #e21e80 100%);
 }
 
 .text-gradient {
-    background: -webkit-linear-gradient(315deg, #1e30f3 0%, #e21e80 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(315deg, #1e30f3 0%, #e21e80 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .rounded-4 {
-    border-radius: 1rem !important;
+  border-radius: 1rem !important;
 }
 
 .feature {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 3rem;
-    width: 3rem;
-    font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.5rem;
 }
 
 .profile {
-    background-image:url("../assets/profile-back.svg");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: bottom;
-    position: relative;
-    height: 75vw;
-    width: 75vw;
-    margin-top: 5vw;
-    max-height: 40rem;
-    max-width: 40rem;
+  background-image: url("../assets/profile-back.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+  position: relative;
+  height: 75vw;
+  width: 75vw;
+  margin-top: 5vw;
+  max-height: 40rem;
+  max-width: 40rem;
 }
 .profile .profile-img {
-    height: 80vw;
-    max-height: 45rem;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  height: 80vw;
+  max-height: 45rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
-
-
 
 @media (min-width: 576px) {
-    .profile {
-        height: 60vw;
-        width: 60vw;
-    }
-    .profile .profile-img {
-        height: 65vw;
-    }
+  .profile {
+    height: 60vw;
+    width: 60vw;
+  }
+  .profile .profile-img {
+    height: 65vw;
+  }
 }
 @media (min-width: 768px) {
-    .profile {
-        height: 50vw;
-        width: 50vw;
-    }
-    .profile .profile-img {
-        height: 55vw;
-    }
+  .profile {
+    height: 50vw;
+    width: 50vw;
+  }
+  .profile .profile-img {
+    height: 55vw;
+  }
 }
 @media (min-width: 992px) {
-    .profile {
-        height: 40vw;
-        width: 40vw;
-    }
-    .profile .profile-img {
-        height: 45vw;
-    }
+  .profile {
+    height: 40vw;
+    width: 40vw;
+  }
+  .profile .profile-img {
+    height: 45vw;
+  }
 }
 @media (min-width: 1200px) {
-    .profile {
-        height: 35vw;
-        width: 35vw;
-    }
-    .profile .profile-img {
-        height: 40vw;
-    }
+  .profile {
+    height: 35vw;
+    width: 35vw;
+  }
+  .profile .profile-img {
+    height: 40vw;
+  }
 }
 
-#loading-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 70vh;
-    overflow: hidden;
+#loading-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 70vh;
+  overflow: hidden;
 }
 
 #loading-spinner {
-    width: 60px;
-    height: 60px;
-    position: relative;
-    border: 3px solid #f3f3f3;
-    border-radius: 50%;
-    border-top-color:#1e30f3;
-    animation: spin 1s linear infinite;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top-color: #1e30f3;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.feature-card {
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(30, 48, 243, 0.2) !important;
+}
+
+.feature-card:hover .feature {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Achievement Section Styling */
+.text-success {
+  color: #28a745 !important;
+}
+
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+.reveal.delay-1 {
+  transition-delay: 0.06s;
+}
+.reveal.delay-2 {
+  transition-delay: 0.12s;
+}
+.reveal.delay-3 {
+  transition-delay: 0.18s;
+}
+.reveal.delay-4 {
+  transition-delay: 0.24s;
+}
+.reveal.delay-5 {
+  transition-delay: 0.3s;
+}
+.reveal.delay-6 {
+  transition-delay: 0.36s;
+}
+.reveal.delay-7 {
+  transition-delay: 0.42s;
+}
+
+// Subtle hover tweak for cards already having hover effect //
+.card.reveal:hover {
+  transform: translateY(-6px) scale(1.01);
+  transition: transform 0.25s ease;
+}
+
+// Intro title letter animation //
+.intro-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.intro-letter.visible {
+  opacity: 1;
+  transform: none;
+}
+#introSub {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+#introSub.visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-letter,
+  #introSub {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Profile gentle float
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+.profile .profile-img.float {
+  animation: floatY 4.5s ease-in-out infinite;
+} */
+
+/* Skill icon subtle pop on reveal */
+.skill-icon {
+  display: inline-block;
+  transform-origin: center center;
+}
+.skill-icon.revealed {
+  animation: pop 0.5s ease forwards;
+}
+@keyframes pop {
+  0% { transform: scale(.6); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Accordion body pulse */
+@keyframes pulse {
+  0% { transform: scale(0.997); }
+  50% { transform: scale(1.007); }
+  100% { transform: scale(1); }
+}
+.accordion-body.pulse {
+  animation: pulse 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile .profile-img.float, .skill-icon.revealed, .accordion-body.pulse {
+    animation: none !important;
+  }
 }
