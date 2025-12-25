@@ -59,6 +59,7 @@ or use Live Server in VS Code
 ## **Author**
 **Karimah Irsyadiyah**
 **Informatics Student – Andalas University**
+
 **Instagram:** https://www.instagram.com/ima_irsdyh/
 **LinkedIn:** https://id.linkedin.com/in/karimah-irsyadiyah-1605092a5
 **GitHub:** https://github.com/iMaIrsdyh
