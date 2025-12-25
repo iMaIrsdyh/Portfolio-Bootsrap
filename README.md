@@ -50,7 +50,7 @@ This project was created to:
 ## **Getting Started**
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/iMaIrsdyh/Portfolio-Bootsrap
 2. **Open the project folder**
 2. **Run the project**
 Open index.html in your browser
