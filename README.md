@@ -54,8 +54,7 @@ This project was created to:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/iMaIrsdyh/Portfolio-Bootsrap.git
-   ```
+   git clone https://github.com/username/repository-name.git
 2. **Open the project folder**
 3. **Run the project**
    Open index.html in your browser
@@ -65,6 +64,7 @@ This project was created to:
 
 **Karimah Irsyadiyah**
 **Informatics Student – Andalas University**
+
 **Instagram:** https://www.instagram.com/ima_irsdyh/
 **LinkedIn:** https://id.linkedin.com/in/karimah-irsyadiyah-1605092a5
 **GitHub:** https://github.com/iMaIrsdyh
