@@ -5,6 +5,7 @@ A modern and responsive **personal portfolio website** built using **HTML5, Boot
 ---
 
 ## **Project Purpose**
+
 This project was created to:
 
 - Demonstrate responsive web design using **Bootstrap 5**
@@ -15,6 +16,7 @@ This project was created to:
 ---
 
 ## **Key Features**
+
 - **Responsive & mobile-friendly layout**
 - **Multi-page navigation** (Home, About, Projects, Contact)
 - **Hero section** with introduction and call-to-action
@@ -27,13 +29,14 @@ This project was created to:
 ---
 
 ## **Tech Stack**
+
 ### **Frontend**
+
 - **HTML5**
 - **CSS3**
 - **Bootstrap 5**
 - **Bootstrap Icons**
 - **JavaScript (ES6 / Vanilla JS)**
-
 
 ---
 
@@ -48,15 +51,18 @@ This project was created to:
 ---
 
 ## **Getting Started**
+
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/iMaIrsdyh/Portfolio-Bootsrap.git
+   ```
 2. **Open the project folder**
-2. **Run the project**
-Open index.html in your browser
-or use Live Server in VS Code
+3. **Run the project**
+   Open index.html in your browser
+   or use Live Server in VS Code
 
 ## **Author**
+
 **Karimah Irsyadiyah**
 **Informatics Student – Andalas University**
 **Instagram:** https://www.instagram.com/ima_irsdyh/
