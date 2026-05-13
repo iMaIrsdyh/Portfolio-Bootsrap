@@ -12,10 +12,10 @@ runs-on: ubuntu-latest
 
 ```
 steps:
-  - name: 🚚 Get latest code
+  - name: Checkout repository
     uses: actions/checkout@v4
 
-  - name: 📂 Sync files to Hostinger
+  - name: FTP Deploy
     uses: SamKirkland/FTP-Deploy-Action@v4.3.5
     with:
       server: ${{ secrets.FTP_SERVER }}
