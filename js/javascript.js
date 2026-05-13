@@ -224,4 +224,31 @@ document.addEventListener('DOMContentLoaded', function () {
 			console.error('Intro animation error:', err);
 		}
 	})();
+
+	(function navAndScroll() {
+		try {
+			const currentPath = window.location.pathname.split('/').pop();
+			document.querySelectorAll('nav .nav-link').forEach(link => {
+				if (link.getAttribute('href') === currentPath) {
+					link.classList.add('active');
+				}
+			});
+
+			const backToTop = document.getElementById('backToTop');
+			if (backToTop) {
+				window.addEventListener('scroll', () => {
+					if (window.scrollY > 450) {
+						backToTop.classList.add('show');
+					} else {
+						backToTop.classList.remove('show');
+					}
+				});
+				backToTop.addEventListener('click', () => {
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+			}
+		} catch (err) {
+			console.error('Nav/scroll init error:', err);
+		}
+	})();
 });
