@@ -1,26 +1,23 @@
-name: Deploy to Hostinger
+name: Deploy to Subdomain
 
 on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-      - name: Checkout Repository
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: FTP Deploy
+      - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          server-dir: /domains/imairsdyh.ifportofolio.com/public_html/
-          dangerous-clean-slate: false
+          server-dir: ./imairsdyh/
+          dangerous-clean-slate: true
