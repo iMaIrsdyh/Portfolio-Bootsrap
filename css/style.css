@@ -270,27 +270,27 @@ html {
   }
 }
 
-/* Modern dark glassmorphism and page utilities */
-.dark-mode {
-  background: #060914;
-  color: #e2e7ff;
+/* Modern light glassmorphism and page utilities */
+.light-mode {
+  background: #f8fafc;
+  color: #1f2937;
   font-family: "Poppins", sans-serif;
 }
-.dark-mode a {
+.light-mode a {
   color: inherit;
 }
 .navbar-blur {
-  background: rgba(7, 12, 32, 0.72) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 .navbar-blur .nav-link {
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(15, 23, 42, 0.8);
   transition: color 0.3s ease;
 }
 .navbar-blur .nav-link:hover,
 .navbar-blur .nav-link.active {
-  color: #ffffff;
+  color: #0f172a;
 }
 .glass-card,
 .glass-panel,
@@ -299,10 +299,10 @@ html {
 .tool-card,
 .check-card,
 .gallery-card {
-  background: rgba(15, 23, 42, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   backdrop-filter: blur(18px);
-  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.24);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
 }
 .glass-card {
   transition:
@@ -316,18 +316,18 @@ html {
 .gallery-card:hover,
 .check-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(236, 72, 153, 0.4);
-  box-shadow: 0 34px 110px rgba(15, 23, 42, 0.32);
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 34px 110px rgba(15, 23, 42, 0.12);
 }
 .btn-glow {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(135deg, #7c3aed, #ec4899 95%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(135deg, #4f46e5, #ec4899 95%);
   color: #fff;
-  box-shadow: 0 18px 45px rgba(124, 58, 237, 0.24);
+  box-shadow: 0 18px 45px rgba(124, 58, 237, 0.2);
 }
 .btn-glow:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 60px rgba(236, 72, 153, 0.32);
+  box-shadow: 0 24px 60px rgba(124, 58, 237, 0.22);
 }
 .section-title {
   letter-spacing: 0.02em;
@@ -350,7 +350,7 @@ html {
   position: relative;
   padding-left: 2.1rem;
   margin-bottom: 1rem;
-  color: #cbd5e1;
+  color: #334155;
 }
 .check-list li::before {
   content: "\f00c";
@@ -392,12 +392,12 @@ html {
   font-weight: 700;
 }
 .code-block {
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.4);
   border-radius: 1rem;
   padding: 1rem 1.15rem;
   font-family: "Fira Code", monospace;
-  color: #d8dee9;
+  color: #0f172a;
   overflow-x: auto;
 }
 .gallery-card img {
@@ -410,11 +410,11 @@ html {
   transform: scale(1.06);
 }
 .footer-link {
-  color: rgba(226, 231, 255, 0.78);
+  color: rgba(15, 23, 42, 0.72);
   transition: color 0.25s ease;
 }
 .footer-link:hover {
-  color: #ffffff;
+  color: #0f172a;
 }
 .scroll-top {
   position: fixed;
