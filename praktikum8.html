@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Praktikum 8 - Eloquent Relationship Laravel 12 oleh Karimah Irsyadiyah.">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Praktikum 8 | Eloquent Relationship</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-dUo2Lx1+bLZtQv7qz1HA7vL3qI+9kXqpkmWh5QudsB2FhQKf6O5jM1T8G5qczPAXaUKBPZ7hVY3AAh5iEO7Qiw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.css">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="d-flex flex-column h-100 light-mode">
+    <main class="flex-shrink-0">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-blur py-3 shadow-none">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">iMaIrsdyh</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenu" aria-controls="#navMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                        <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section overflow-hidden py-6">
+            <div class="container px-5 pt-5">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6">
+                        <div class="hero-card rounded-4 p-5 reveal delay-1">
+                            <span class="badge bg-gradient-primary-to-secondary text-white mb-3">Praktikum 8</span>
+                            <h1 class="display-5 fw-bolder mb-4">Eloquent Relationship Laravel 12 – One To Many dan Many
+                                To Many</h1>
+                            <p class="lead text-muted mb-4">Dokumentasi Praktikum 8 dengan fokus pada relasi antar-tabel
+                                menggunakan Eloquent Laravel, termasuk migration, model relationship, seeder,
+                                controller, dan tampilan CRUD untuk entitas Student.</p>
+                            <div class="d-flex flex-column flex-sm-row gap-3">
+                                <a class="btn btn-glow btn-lg px-4"
+                                    href="https://github.com/iMaIrsdyh/Laravel12-Practice" target="_blank"
+                                    rel="noreferrer"><i class="fab fa-github me-2"></i>View Github</a>
+                                <a class="btn btn-outline-dark btn-lg px-4" href="projects.html">Back to Projects</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="glass-card rounded-4 p-4 reveal delay-2">
+                            <img src="assets/Laravel-Logo.png" alt="Laravel relationship structure"
+                                class="img-fluid rounded-4 shadow-lg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Ringkasan Praktikum 8</h2>
+                    <p class="text-muted">Praktikum ini membangun relasi Eloquent antara tabel Major, Student, Subject,
+                        dan pivot table student_subject untuk kebutuhan aplikasi akademik Laravel.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-code-branch"></i></div>
+                            <h5 class="fw-bold">Relasi Eloquent</h5>
+                            <p class="text-muted mb-0">Mengimplementasikan One To Many dan Many To Many antara model
+                                Laravel.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-database"></i></div>
+                            <h5 class="fw-bold">Migration & Pivot</h5>
+                            <p class="text-muted mb-0">Membuat tabel master dan tabel pivot untuk menyimpan relasi
+                                student dengan subject.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-desktop"></i></div>
+                            <h5 class="fw-bold">CRUD Student</h5>
+                            <p class="text-muted mb-0">Menampilkan halaman daftar, tambah, edit, hapus, dan tampil
+                                detail mahasiswa berserta relasi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="introduction" class="py-5">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-7 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">Pendahuluan</h2>
+                        <p class="text-muted mb-4">Pada praktikum ini, tujuan utamanya adalah mempelajari bagaimana
+                            Laravel Eloquent mengelola relasi antar model. Dengan menerapkan One To Many dan Many To
+                            Many, aplikasi menjadi lebih terstruktur dan data relasional dapat diambil secara efisien.
+                        </p>
+                        <p class="text-muted">Materi meliputi pembuatan migration untuk tabel <strong>majors</strong>,
+                            <strong>students</strong>, <strong>subjects</strong>, dan pivot table
+                            <strong>student_subject</strong>, serta pembuatan seeder untuk menyimulasikan data jurusan,
+                            mata kuliah, dan mahasiswa.</p>
+                    </div>
+                    <div class="col-lg-5 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Aplikasi Laravel mampu menyajikan data mahasiswa lengkap dengan
+                                jurusan dan daftar mata kuliah yang diikuti.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="migration" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Migration</h2>
+                    <p class="text-muted">Migration membuat struktur database menjadi kode yang mudah dilacak dan
+                        diubah. Praktikum ini menggunakan migration untuk membangun tabel relasional.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Majors</h3>
+                            <p class="text-muted">Tabel <strong>majors</strong> menyimpan data jurusan.</p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_majors_table</code></pre>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('majors', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Students</h3>
+                            <p class="text-muted">Tabel <strong>students</strong> menghubungkan setiap mahasiswa dengan
+                                jurusan.</p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_students_table</code></pre>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('students', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->string('nim')->unique();
+    $table->foreignId('major_id')->constrained('majors')->onDelete('cascade');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Subjects & Pivot</h3>
+                            <p class="text-muted">Tabel <strong>subjects</strong> dan pivot
+                                <strong>student_subject</strong> menyimpan relasi Many To Many.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_subjects_table</code>
+php artisan make:migration create_student_subject_table</code></pre>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('student_subject', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+    $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Menjalankan Migration</h3>
+                        <p class="text-muted">Setelah semua migration selesai ditulis, perintah berikut dieksekusi untuk
+                            membuat tabel di database.</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>php artisan migrate</code></pre>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="check-card rounded-4 p-5">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Tabel <strong>majors</strong>, <strong>students</strong>,
+                                <strong>subjects</strong>, dan <strong>student_subject</strong> berhasil dibuat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="relationship" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Model Relationship</h2>
+                    <p class="text-muted">Relasi Eloquent menghubungkan model agar data dapat diambil secara otomatis
+                        dari tabel yang saling terkait.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-6 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">One To Many</h3>
+                            <p class="text-muted">Satu jurusan memiliki banyak mahasiswa.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function students()
+{
+    return $this->hasMany(Student::class);
+}</code></pre>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function major()
+{
+    return $this->belongsTo(Major::class);
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Many To Many</h3>
+                            <p class="text-muted">Mahasiswa dapat mengambil banyak mata kuliah dan mata kuliah dapat
+                                diambil banyak mahasiswa.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function subjects()
+{
+    return $this->belongsToMany(Subject::class);
+}</code></pre>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function students()
+{
+    return $this->belongsToMany(Student::class);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="seeder" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Seeder</h2>
+                    <p class="text-muted">Seeder mengisi tabel dengan data awal agar fitur relasi dan CRUD dapat diuji
+                        secara langsung.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">MajorSeeder</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:seeder MajorSeeder</code></pre>
+                            <p class="text-muted mb-3">Membuat data jurusan awal.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>DB::table('majors')->insert([
+    ['name' => 'Informatika'],
+    ['name' => 'Sistem Informasi'],
+]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">SubjectSeeder</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:seeder SubjectSeeder</code></pre>
+                            <p class="text-muted mb-3">Membuat data mata kuliah dengan atribut SKS.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>DB::table('subjects')->insert([
+    ['name' => 'Pemrograman Web', 'sks' => 3],
+    ['name' => 'Basis Data', 'sks' => 3],
+    ['name' => 'Struktur Data', 'sks' => 2],
+]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">StudentSeeder</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:seeder StudentSeeder</code></pre>
+                            <p class="text-muted mb-3">Menyisipkan mahasiswa yang otomatis berelasi dengan jurusan dan
+                                mata kuliah.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>$student = Student::create([
+    'name' => 'Karimah Irsyadiyah',
+    'nim' => '2411533018',
+    'major_id' => 1,
+]);
+$student->subjects()->attach([1, 2]);</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Menjalankan Seeder</h3>
+                        <p class="text-muted">Seeder didaftarkan ke <code>DatabaseSeeder.php</code> agar data awal dapat
+                            diisi saat menjalankan perintah seeding.</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>$this->call(MajorSeeder::class);
+$this->call(SubjectSeeder::class);
+$this->call(StudentSeeder::class);</code></pre>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="check-card rounded-4 p-5">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Database memuat data jurusan, mahasiswa, dan mata kuliah dengan
+                                relasi yang siap ditampilkan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="controller" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Controller</h2>
+                    <p class="text-muted">Controller menangani logika CRUD dan memanggil model untuk mengambil data
+                        relasional.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-6 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Membuat Controller</h3>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:controller StudentController --resource</code></pre>
+                            <p class="text-muted mb-3">Controller resource menyediakan method CRUD yang lengkap untuk
+                                entitas <strong>students</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Contoh Method index()</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function index()
+{
+    $students = Student::with(['major', 'subjects'])->get();
+
+    return view('students.index', compact('students'));
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="routing" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-7 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">Routing</h2>
+                        <p class="text-muted mb-4">Resource route digunakan untuk menghasilkan route CRUD otomatis bagi
+                            controller Student.</p>
+                        <pre
+                            class="p-4 rounded-4 bg-light"><code>Route::resource('students', StudentController::class);</code></pre>
+                        <p class="text-muted">Route ini memetakan URI ke method <strong>index</strong>,
+                            <strong>create</strong>, <strong>store</strong>, <strong>show</strong>,
+                            <strong>edit</strong>, <strong>update</strong>, dan <strong>destroy</strong>.</p>
+                    </div>
+                    <div class="col-lg-5 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Keuntungan</h5>
+                            <ul class="text-muted">
+                                <li>Menghemat deklarasi route</li>
+                                <li>Standar RESTful</li>
+                                <li>Mudah di-maintain</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">View</h2>
+                    <p class="text-muted">Folder view menyajikan tampilan daftar, form tambah, edit, dan detail
+                        mahasiswa dengan relasi jurusan dan mata kuliah.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-6 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Folder View</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>resources/views/students
+- index.blade.php
+- create.blade.php
+- edit.blade.php
+- show.blade.php</code></pre>
+                            <p class="text-muted mb-0">Setiap view menampilkan data mahasiswa lengkap dengan relasi
+                                Eloquent.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Contoh Tampilan</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>@foreach ($students as $student)
+    <tr>
+        <td>{{ $student->nim }}</td>
+        <td>{{ $student->name }}</td>
+        <td>{{ $student->major->name }}</td>
+        <td>{{ $student->subjects->pluck('name')->join(', ') }}</td>
+    </tr>
+@endforeach</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="query" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Query Relationship</h2>
+                    <p class="text-muted">Query relationship digunakan untuk memuat data relasi secara efisien dan
+                        melakukan perhitungan pada koleksi terkait.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-6 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Menampilkan relasi</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>Student::with(['major', 'subjects'])->get();
+Major::withCount('students')->get();
+Student::with('subjects')->find(1);</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">Menghitung SKS</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>$student->subjects->sum('sks');</code></pre>
+                            <p class="text-muted mb-0">Dengan relasi Many To Many, total SKS mahasiswa dapat dihitung
+                                langsung dari koleksi mata kuliah.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="crud" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Implementasi CRUD Student</h2>
+                    <p class="text-muted">Implementasi CRUD mahasiswa menampilkan form dan tabel yang memanfaatkan data
+                        relasional untuk jurusan dan mata kuliah.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Create</h5>
+                            <p class="text-muted mb-0">Form tambah mahasiswa menyediakan pilihan jurusan dan mata
+                                kuliah.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Read</h5>
+                            <p class="text-muted mb-0">Menampilkan daftar mahasiswa lengkap dengan nama jurusan dan
+                                daftar mata kuliah.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Update & Delete</h5>
+                            <p class="text-muted mb-0">Mengubah dan menghapus data mahasiswa secara terpusat dalam
+                                halaman CRUD.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Proses CRUD</h3>
+                        <p class="text-muted">Controller menyimpan input mahasiswa, menyertakan foreign key
+                            <code>major_id</code>, dan mengaitkan mata kuliah pada pivot table.</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>public function store(Request $request)
+{
+    $student = Student::create($request->validate([
+        'name' => 'required',
+        'nim' => 'required|unique:students',
+        'major_id' => 'required',
+    ]));
+
+    $student->subjects()->sync($request->subjects);
+
+    return redirect()->route('students.index');
+}</code></pre>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil CRUD</h5>
+                            <p class="text-muted mb-0">Data mahasiswa tersimpan dengan relasi jurusan dan mata kuliah,
+                                sehingga tampilan detail dapat menunjukkan semua informasi terkait.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-8 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">Kesimpulan</h2>
+                        <p class="text-muted mb-4">Praktikum 8 berhasil menunjukkan bagaimana Laravel Eloquent
+                            mempermudah pengelolaan relasi antar model. Penerapan One To Many dan Many To Many membuat
+                            data jurusan, mahasiswa, dan mata kuliah terhubung secara konsisten.</p>
+                        <p class="text-muted">Dengan migration, seeder, resource controller, dan view Blade, aplikasi
+                            CRUD Student kini mendukung tampilan daftar mahasiswa, detail relasi, dan perhitungan total
+                            SKS.</p>
+                    </div>
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil Akhir</h5>
+                            <p class="text-muted mb-0">Aplikasi siap digunakan sebagai dokumentasi portfolio Laravel
+                                yang menampilkan kemampuan Eloquent Relationship secara lengkap.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Dokumentasi Hasil</h2>
+                    <p class="text-muted">Berikut placeholder gambar dokumentasi untuk halaman CRUD Student dan relasi
+                        database.</p>
+                </div>
+                <div class="row gx-4 gy-4">
+                    <div class="col-md-6 col-xl-4 reveal delay-2">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/students-index.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Students Index">
+                            <div class="card-body">
+                                <h5 class="card-title">Students Index</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-3">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/students-create.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Students Create">
+                            <div class="card-body">
+                                <h5 class="card-title">Students Create</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-4">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/students-edit.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Students Edit">
+                            <div class="card-body">
+                                <h5 class="card-title">Students Edit</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-5">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/students-show.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Students Show">
+                            <div class="card-body">
+                                <h5 class="card-title">Students Show</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-6">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/database-relations.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot database relations">
+                            <div class="card-body">
+                                <h5 class="card-title">Database Relations</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-7">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/student-subject-pivot.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot pivot table student_subject">
+                            <div class="card-body">
+                                <h5 class="card-title">Student Subject Pivot</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="author" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="glass-card rounded-4 p-5 reveal delay-1">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-4 text-center">
+                            <div class="feature bg-gradient-primary-to-secondary text-white rounded-circle mx-auto mb-3"
+                                style="width: 4rem; height: 4rem;">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h3 class="fw-bold mb-1">Karimah Irsyadiyah</h3>
+                            <p class="text-muted mb-0">Mahasiswa Informatika, Universitas Andalas</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <h5 class="fw-bold mb-3">Profil Profesional</h5>
+                            <p class="text-muted mb-4">Dokumentasi ini menampilkan kemampuan Laravel Eloquent, termasuk
+                                migration, seeder, controller resource, dan view Blade yang siap dipublikasikan sebagai
+                                portfolio.</p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a class="btn btn-outline-dark btn-sm" href="https://github.com/iMaIrsdyh"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-github me-2"></i>GitHub</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://www.instagram.com/ima_irsdyh/"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-instagram me-2"></i>Instagram</a>
+                                <a class="btn btn-outline-dark btn-sm"
+                                    href="https://www.linkedin.com/in/karimah-irsyadiyah-1605092a5/" target="_blank"
+                                    rel="noreferrer"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://wa.me/6285174120405"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+                                <a class="btn btn-outline-dark btn-sm"
+                                    href="https://github.com/iMaIrsdyh/Laravel12-Practice/tree/main/Praktikum6-10"
+                                    target="_blank" rel="noreferrer"><i class="fa-solid fa-folder-open me-2"></i>Repo
+                                    Praktikum 8</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div>
+                </div>
+                <div class="col-auto">
+                    <a class="small" href="#">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="#">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="./js/javascript.js"></script>
+</body>
+
+</html>

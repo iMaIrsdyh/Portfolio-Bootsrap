@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Praktikum 7 - Migration, Seeding, Routing, Model, Controller, View pada Laravel 12 oleh Karimah Irsyadiyah.">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Praktikum 7 | Laravel 12 CRUD</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-dUo2Lx1+bLZtQv7qz1HA7vL3qI+9kXqpkmWh5QudsB2FhQKf6O5jM1T8G5qczPAXaUKBPZ7hVY3AAh5iEO7Qiw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.css">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="d-flex flex-column h-100 light-mode">
+    <main class="flex-shrink-0">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-blur py-3 shadow-none">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">iMaIrsdyh</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenu" aria-controls="#navMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                        <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section overflow-hidden py-6">
+            <div class="container px-5 pt-5">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6">
+                        <div class="hero-card rounded-4 p-5 reveal delay-1">
+                            <span class="badge bg-gradient-primary-to-secondary text-white mb-3">Praktikum 7</span>
+                            <h1 class="display-5 fw-bolder mb-4">Praktikum Laravel 12 – Migration, Seeding, Routing,
+                                Model, Controller, View</h1>
+                            <p class="lead text-muted mb-4">Dokumentasi lapangan praktikum web menggunakan Laravel 12
+                                dengan fokus pada pembuatan tabel, data seeding, resource route, Eloquent model,
+                                controller CRUD, dan tampilan Blade.</p>
+                            <div class="d-flex flex-column flex-sm-row gap-3">
+                                <a class="btn btn-glow btn-lg px-4"
+                                    href="https://github.com/iMaIrsdyh/Laravel12-Practice" target="_blank"
+                                    rel="noreferrer"><i class="fab fa-github me-2"></i>View Github</a>
+                                <a class="btn btn-outline-dark btn-lg px-4" href="projects.html">Back to Projects</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="glass-card rounded-4 p-4 reveal delay-2">
+                            <img src="assets/Laravel-Logo.png" alt="Laravel MVC workflow"
+                                class="img-fluid rounded-4 shadow-lg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Ringkasan Praktikum 7</h2>
+                    <p class="text-muted">Laporan lengkap migrasi database, data seeding, routing resource, model
+                        Eloquent, pengendali resource, dan tampilan Blade untuk entitas Product, Customer, dan
+                        Mahasiswa.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-database"></i></div>
+                            <h5 class="fw-bold">Migration & Seeding</h5>
+                            <p class="text-muted mb-0">Membangun struktur tabel dan memasukkan data awal untuk pengujian
+                                cepat aplikasi.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-route"></i></div>
+                            <h5 class="fw-bold">Routing Resource</h5>
+                            <p class="text-muted mb-0">Memanfaatkan resource route Laravel untuk menghasilkan route CRUD
+                                secara otomatis.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="feature-card rounded-4 p-5 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i
+                                    class="fa-solid fa-desktop"></i></div>
+                            <h5 class="fw-bold">Blade View</h5>
+                            <p class="text-muted mb-0">Menampilkan data dengan struktur halaman yang konsisten dan
+                                profesional menggunakan template Blade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="database" class="py-5">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-7 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">1. Konfigurasi Database</h2>
+                        <p class="text-muted mb-4">Tahap awal praktikum adalah membangun koneksi database yang stabil.
+                            Database <strong>praktikum_laravel</strong> dibuat melalui phpMyAdmin XAMPP dan kemudian
+                            disambungkan ke aplikasi Laravel di file <code>.env</code>.</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=praktikum_laravel
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+                        <p class="text-muted">Setelah konfigurasi selesai, Laravel berhasil terhubung dengan MySQL
+                            sehingga perintah migrasi dan seeding dapat dieksekusi.</p>
+                    </div>
+                    <div class="col-lg-5 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Koneksi database aktif, lingkungan pengembangan siap, dan
+                                struktur migrasi dapat dibuat tanpa error.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="migration" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">2. Migration</h2>
+                    <p class="text-muted">Migration digunakan untuk mendefinisikan struktur tabel dengan kode sehingga
+                        perubahan dapat dilacak dan direset.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">2.1 Migration Product</h3>
+                            <p class="text-muted">Membuat tabel <strong>products</strong> untuk menyimpan data barang.
+                            </p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_products_table</code></pre>
+                            <p class="text-muted mb-3">Isi migration:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('products', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->integer('price');
+    $table->text('description');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">2.2 Migration Customer</h3>
+                            <p class="text-muted">Membuat tabel <strong>customers</strong> untuk menyimpan informasi
+                                pelanggan.</p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_customers_table</code></pre>
+                            <p class="text-muted mb-3">Isi migration:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('customers', function (Blueprint $table) {
+    $table->id();
+    $table->string('nama');
+    $table->string('email')->unique();
+    $table->string('telepon');
+    $table->text('alamat');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">2.3 Migration Mahasiswa</h3>
+                            <p class="text-muted">Membuat tabel <strong>mahasiswas</strong> sebagai data akademik
+                                mahasiswa.</p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_mahasiswas_table</code></pre>
+                            <p class="text-muted mb-3">Isi migration:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>Schema::create('mahasiswas', function (Blueprint $table) {
+    $table->id();
+    $table->string('nim')->unique();
+    $table->string('nama');
+    $table->string('jurusan');
+    $table->string('email')->unique();
+    $table->integer('angkatan');
+    $table->timestamps();
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Menjalankan Migration</h3>
+                        <p class="text-muted">Setelah seluruh migration selesai dibuat, perintah berikut dieksekusi
+                            untuk membuat tabel di database:</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>php artisan migrate</code></pre>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="check-card rounded-4 p-5">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Berhasil membuat tabel <strong>products</strong>,
+                                <strong>customers</strong>, dan <strong>mahasiswas</strong> di database
+                                <strong>praktikum_laravel</strong> tanpa error.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="seeding" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">3. Seeding</h2>
+                    <p class="text-muted">Seeder digunakan untuk mengisi database dengan data dummy sehingga aplikasi
+                        dapat diuji tanpa masukan manual.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">3.1 Product Seeder</h3>
+                            <p class="text-muted">Membuat dua data produk awal untuk pengujian daftar produk.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:seeder ProductSeeder</code></pre>
+                            <p class="text-muted mb-3">Isi seeder:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>DB::table('products')->insert([
+    [
+        'name' => 'Laptop',
+        'price' => 7000000,
+        'description' => 'Laptop untuk pemrograman',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'name' => 'Mouse',
+        'price' => 150000,
+        'description' => 'Mouse wireless',
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]
+]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">3.2 Customer Seeder</h3>
+                            <p class="text-muted">Membuat tiga data customer untuk menguji daftar dan detail pelanggan.
+                            </p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:seeder CustomerSeeder</code></pre>
+                            <p class="text-muted mb-3">Isi seeder:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>DB::table('customers')->insert([
+    [
+        'nama' => 'Alya Pratama',
+        'email' => 'alya@example.com',
+        'telepon' => '081234567890',
+        'alamat' => 'Jalan Merdeka No. 12, Jakarta',
+    ],
+    [
+        'nama' => 'Budi Santoso',
+        'email' => 'budi@example.com',
+        'telepon' => '082345678901',
+        'alamat' => 'Jalan Mawar No. 9, Bandung',
+    ],
+    [
+        'nama' => 'Citra Dewi',
+        'email' => 'citra@example.com',
+        'telepon' => '083456789012',
+        'alamat' => 'Jalan Melati No. 7, Surabaya',
+    ]
+]);</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">3.3 Mahasiswa Seeder</h3>
+                            <p class="text-muted">Class seed sederhana untuk data mahasiswa tunggal sebagai contoh
+                                entitas akademik.</p>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:seeder MahasiswaSeeder</code></pre>
+                            <p class="text-muted mb-3">Isi seeder:</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>DB::table('mahasiswas')->insert([
+    [
+        'nim' => '2411533018',
+        'nama' => 'Karimah Irsyadiyah',
+        'jurusan' => 'Informatika',
+        'email' => 'karimah@unand.ac.id',
+        'angkatan' => 2024,
+    ]
+]);</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Daftarkan Seeder</h3>
+                        <p class="text-muted">Seeder didaftarkan di file
+                            <code>database/seeders/DatabaseSeeder.php</code> agar dapat berjalan bersama.
+                        </p>
+                        <pre class="p-4 rounded-4 bg-light"><code>$this->call(ProductSeeder::class);
+$this->call(CustomerSeeder::class);
+$this->call(MahasiswaSeeder::class);</code></pre>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="check-card rounded-4 p-5">
+                            <h5 class="fw-bold mb-3">Perintah Jalankan Seeder</h5>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan db:seed</code></pre>
+                            <p class="text-muted mb-0">Database terisi otomatis dengan data awal sehingga fitur read dan
+                                list dapat diuji.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="model" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">4. Model</h2>
+                    <p class="text-muted">Model Eloquent menghubungkan tabel database dengan aplikasi sehingga data
+                        dapat diolah secara objek.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">4.1 Product Model</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:model Product</code></pre>
+                            <p class="text-muted mb-3">Tambahkan atribut yang dapat diisi massal.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>protected $fillable = [
+    'name',
+    'price',
+    'description'
+];</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">4.2 Customer Model</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:model Customer</code></pre>
+                            <p class="text-muted mb-3">Konfigurasi mass assignment untuk entitas pelanggan.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>protected $fillable = [
+    'nama',
+    'email',
+    'telepon',
+    'alamat'
+];</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">4.3 Mahasiswa Model</h3>
+                            <pre class="p-4 rounded-4 bg-light"><code>php artisan make:model Mahasiswa</code></pre>
+                            <p class="text-muted mb-3">Menentukan kolom yang boleh diisi saat CRUD Mahasiswa dijalankan.
+                            </p>
+                            <pre class="p-4 rounded-4 bg-light"><code>protected $fillable = [
+    'nim',
+    'nama',
+    'jurusan',
+    'email',
+    'angkatan'
+];</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="routing" class="py-5">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-7 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">5. Routing</h2>
+                        <p class="text-muted mb-4">Routing menghubungkan URL dengan controller. Resource route Laravel
+                            menghasilkan semua route CRUD dalam satu deklarasi.</p>
+                        <pre class="p-4 rounded-4 bg-light"><code>Route::resource('products', ProductController::class);
+Route::resource('customers', CustomerController::class);
+Route::resource('mahasiswa', MahasiswaController::class);</code></pre>
+                        <p class="text-muted">Route resource membuat method <strong>index</strong>,
+                            <strong>create</strong>, <strong>store</strong>, <strong>show</strong>,
+                            <strong>edit</strong>, <strong>update</strong>, dan <strong>destroy</strong> secara
+                            otomatis.
+                        </p>
+                    </div>
+                    <div class="col-lg-5 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Keuntungan</h5>
+                            <ul class="text-muted">
+                                <li>Mengurangi duplikasi route</li>
+                                <li>Standarisasi naming convention</li>
+                                <li>Mudah dikelola pada aplikasi CRUD</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="controller" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">6. Controller</h2>
+                    <p class="text-muted">Controller bertanggung jawab menerima permintaan, memproses model, dan
+                        mengirim data ke tampilan.</p>
+                </div>
+
+                <div class="row gy-5">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">6.1 Product Controller</h3>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:controller ProductController --resource</code></pre>
+                            <p class="text-muted mb-3">Contoh method <code>index()</code> untuk mengambil semua product.
+                            </p>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function index()
+{
+    $products = Product::all();
+
+    return view('products.index', compact('products'));
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">6.2 Customer Controller</h3>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:controller CustomerController --resource</code></pre>
+                            <p class="text-muted mb-3">Contoh method <code>index()</code> untuk menampilkan daftar
+                                customer.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function index()
+{
+    $customers = Customer::all();
+
+    return view('customers.index', compact('customers'));
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">6.3 Mahasiswa Controller</h3>
+                            <pre
+                                class="p-4 rounded-4 bg-light"><code>php artisan make:controller MahasiswaController --resource</code></pre>
+                            <p class="text-muted mb-3">Contoh method <code>index()</code> untuk menampilkan semua
+                                mahasiswa.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>public function index()
+{
+    $mahasiswas = Mahasiswa::all();
+
+    return view('mahasiswa.index', compact('mahasiswas'));
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center gx-5 mt-5">
+                    <div class="col-lg-7 reveal delay-5">
+                        <h3 class="fw-bold">Fungsi Tambahan</h3>
+                        <p class="text-muted">Selain <code>index()</code>, controller resource biasa juga berisi
+                            <code>store()</code>, <code>update()</code>, dan <code>destroy()</code> untuk operasi CRUD
+                            penuh.
+                        </p>
+                    </div>
+                    <div class="col-lg-5 reveal delay-6">
+                        <div class="check-card rounded-4 p-5">
+                            <h5 class="fw-bold mb-3">Hasil</h5>
+                            <p class="text-muted mb-0">Kelas controller mampu mengelola aliran data antara model dan
+                                view sesuai standar MVC Laravel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">7. View</h2>
+                    <p class="text-muted">View menampilkan data kepada pengguna melalui Blade template dengan struktur
+                        halaman yang jelas.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">7.1 View Product</h3>
+                            <p class="text-muted mb-3">Folder dan file view untuk entitas <strong>products</strong>.</p>
+                            <pre class="p-4 rounded-4 bg-light"><code>resources/views/products
+- index.blade.php
+- create.blade.php
+- edit.blade.php
+- show.blade.php</code></pre>
+                            <p class="text-muted mb-0">Fungsi: menampilkan daftar, menambah, mengedit, dan detail
+                                produk.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">7.2 View Customer</h3>
+                            <p class="text-muted mb-3">Folder dan file view untuk entitas <strong>customers</strong>.
+                            </p>
+                            <pre class="p-4 rounded-4 bg-light"><code>resources/views/customers
+- index.blade.php
+- create.blade.php
+- edit.blade.php
+- show.blade.php</code></pre>
+                            <p class="text-muted mb-0">Fungsi: menampilkan daftar, menambah, mengedit, dan detail
+                                customer.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h3 class="fw-bold mb-3">7.3 View Mahasiswa</h3>
+                            <p class="text-muted mb-3">Folder dan file view untuk entitas <strong>mahasiswa</strong>.
+                            </p>
+                            <pre class="p-4 rounded-4 bg-light"><code>resources/views/mahasiswa
+- index.blade.php
+- create.blade.php
+- edit.blade.php
+- show.blade.php</code></pre>
+                            <p class="text-muted mb-0">Fungsi: menampilkan daftar, menambah, mengedit, dan detail
+                                mahasiswa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="crud" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">8. Implementasi CRUD</h2>
+                    <p class="text-muted">Praktikum berhasil menerapkan operasi CRUD untuk Product, Customer, dan
+                        Mahasiswa.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Product</h5>
+                            <ul class="text-muted">
+                                <li>Menambah data produk</li>
+                                <li>Menampilkan daftar produk</li>
+                                <li>Mengubah data produk</li>
+                                <li>Menghapus produk</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-3">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Customer</h5>
+                            <ul class="text-muted">
+                                <li>Menambah data customer</li>
+                                <li>Menampilkan daftar customer</li>
+                                <li>Mengubah data customer</li>
+                                <li>Menghapus customer</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 reveal delay-4">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Mahasiswa</h5>
+                            <ul class="text-muted">
+                                <li>Menambah data mahasiswa</li>
+                                <li>Menampilkan daftar mahasiswa</li>
+                                <li>Mengubah data mahasiswa</li>
+                                <li>Menghapus mahasiswa</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="py-5">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-8 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">9. Kesimpulan</h2>
+                        <p class="text-muted mb-4">Praktikum 7 memperkuat prinsip MVC Laravel dengan membuat layer
+                            database, model, controller, dan view secara terpisah namun terintegrasi. Penggunaan
+                            migration dan seeder membantu manajemen data, sedangkan resource route dan controller
+                            resource mempermudah alur CRUD.</p>
+                        <p class="text-muted">Implementasi pada entitas Product, Customer, dan Mahasiswa menunjukkan
+                            bahwa Laravel dapat memfasilitasi pengembangan aplikasi web terstruktur dengan Eloquent ORM
+                            dan Blade Template Engine.</p>
+                    </div>
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil Akhir</h5>
+                            <p class="text-muted mb-0">Aplikasi berhasil mengelola data produk, pelanggan, dan mahasiswa
+                                dengan CRUD lengkap serta tampilan responsif yang siap digunakan sebagai dasar portfolio
+                                proyek Laravel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">Dokumentasi Hasil</h2>
+                    <p class="text-muted">Placeholder screenshot untuk dokumentasi praktikum. Gambar dapat diganti
+                        setelah diambil dari aplikasi.</p>
+                </div>
+                <div class="row gx-4 gy-4">
+                    <div class="col-md-6 col-xl-4 reveal delay-2">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/product-index.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Product">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot halaman Product</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-3">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/product-create.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot tambah Product">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot tambah Product</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-4">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/product-edit.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot edit Product">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot edit Product</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-5">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/product-detail.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot detail Product">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot detail Product</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-6">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/customer-index.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Customer">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot halaman Customer</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-6">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/customer-create.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot tambah Customer">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot tambah Customer</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-7">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/customer-edit.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot edit Customer">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot edit Customer</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-8">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/mahasiswa-index.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot halaman Mahasiswa">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot halaman Mahasiswa</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-9">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/mahasiswa-create.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot tambah Mahasiswa">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot tambah Mahasiswa</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-10">
+                        <div class="card rounded-4 border-0 shadow-sm h-100">
+                            <img src="/assets/mahasiswa-edit.png" class="card-img-top rounded-top-4"
+                                alt="Screenshot edit Mahasiswa">
+                            <div class="card-body">
+                                <h5 class="card-title">Screenshot edit Mahasiswa</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="author" class="py-5">
+            <div class="container px-5">
+                <div class="glass-card rounded-4 p-5 reveal delay-1">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-4 text-center">
+                            <div class="feature bg-gradient-primary-to-secondary text-white rounded-circle mx-auto mb-3"
+                                style="width: 4rem; height: 4rem;">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h3 class="fw-bold mb-1">Karimah Irsyadiyah</h3>
+                            <p class="text-muted mb-0">Mahasiswa Informatika, Universitas Andalas</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <h5 class="fw-bold mb-3">Profil Profesional</h5>
+                            <p class="text-muted mb-4">Kariamah Irsyadiyah adalah seorang mahasiswa Informatika di Universitas Andalas dengan minat dalam pengembangan web menggunakan framework Laravel.</p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a class="btn btn-outline-dark btn-sm" href="https://github.com/iMaIrsdyh"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-github me-2"></i>GitHub</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://www.instagram.com/ima_irsdyh/"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-instagram me-2"></i>Instagram</a>
+                                <a class="btn btn-outline-dark btn-sm"
+                                    href="https://www.linkedin.com/in/karimah-irsyadiyah-1605092a5/" target="_blank"
+                                    rel="noreferrer"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://wa.me/6285174120405"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+                                <a class="btn btn-outline-dark btn-sm"
+                                    href="https://github.com/iMaIrsdyh/Laravel12-Practice/tree/main/Praktikum6-10"
+                                    target="_blank" rel="noreferrer"><i class="fa-solid fa-folder-open me-2"></i>Repo
+                                    Praktikum 7</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div>
+                </div>
+                <div class="col-auto">
+                    <a class="small" href="#">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="#">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="./js/javascript.js"></script>
+</body>
+
+</html>
