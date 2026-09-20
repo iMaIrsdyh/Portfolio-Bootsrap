@@ -47,6 +47,7 @@
                         <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="praktikum.html">Praktikum</a></li>
                         <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
@@ -133,7 +134,8 @@
                         <p class="text-muted">Materi meliputi pembuatan migration untuk tabel <strong>majors</strong>,
                             <strong>students</strong>, <strong>subjects</strong>, dan pivot table
                             <strong>student_subject</strong>, serta pembuatan seeder untuk menyimulasikan data jurusan,
-                            mata kuliah, dan mahasiswa.</p>
+                            mata kuliah, dan mahasiswa.
+                        </p>
                     </div>
                     <div class="col-lg-5 reveal delay-2">
                         <div class="glass-card rounded-4 p-5 h-100">
@@ -188,7 +190,8 @@
                         <div class="glass-card rounded-4 p-5 h-100">
                             <h3 class="fw-bold mb-3">Subjects & Pivot</h3>
                             <p class="text-muted">Tabel <strong>subjects</strong> dan pivot
-                                <strong>student_subject</strong> menyimpan relasi Many To Many.</p>
+                                <strong>student_subject</strong> menyimpan relasi Many To Many.
+                            </p>
                             <pre class="p-4 rounded-4 bg-light"><code>php artisan make:migration create_subjects_table</code>
 php artisan make:migration create_student_subject_table</code></pre>
                             <pre class="p-4 rounded-4 bg-light"><code>Schema::create('student_subject', function (Blueprint $table) {
@@ -212,7 +215,8 @@ php artisan make:migration create_student_subject_table</code></pre>
                         <div class="check-card rounded-4 p-5">
                             <h5 class="fw-bold mb-3">Hasil</h5>
                             <p class="text-muted mb-0">Tabel <strong>majors</strong>, <strong>students</strong>,
-                                <strong>subjects</strong>, dan <strong>student_subject</strong> berhasil dibuat.</p>
+                                <strong>subjects</strong>, dan <strong>student_subject</strong> berhasil dibuat.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -373,7 +377,8 @@ $this->call(StudentSeeder::class);</code></pre>
                             class="p-4 rounded-4 bg-light"><code>Route::resource('students', StudentController::class);</code></pre>
                         <p class="text-muted">Route ini memetakan URI ke method <strong>index</strong>,
                             <strong>create</strong>, <strong>store</strong>, <strong>show</strong>,
-                            <strong>edit</strong>, <strong>update</strong>, dan <strong>destroy</strong>.</p>
+                            <strong>edit</strong>, <strong>update</strong>, dan <strong>destroy</strong>.
+                        </p>
                     </div>
                     <div class="col-lg-5 reveal delay-2">
                         <div class="glass-card rounded-4 p-5 h-100">
@@ -492,7 +497,8 @@ Student::with('subjects')->find(1);</code></pre>
                     <div class="col-lg-7 reveal delay-5">
                         <h3 class="fw-bold">Proses CRUD</h3>
                         <p class="text-muted">Controller menyimpan input mahasiswa, menyertakan foreign key
-                            <code>major_id</code>, dan mengaitkan mata kuliah pada pivot table.</p>
+                            <code>major_id</code>, dan mengaitkan mata kuliah pada pivot table.
+                        </p>
                         <pre class="p-4 rounded-4 bg-light"><code>public function store(Request $request)
 {
     $student = Student::create($request->validate([
