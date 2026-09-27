@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Laporan Praktikum Mobile Application 3 tentang form input transaksi dan date picker pada Flutter.">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Praktikum Mobile Application 3 | Karimah Irsyadiyah</title>
+
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-dUo2Lx1+bLZtQv7qz1HA7vL3qI+9kXqpkmWh5QudsB2FhQKf6O5jM1T8G5qczPAXaUKBPZ7hVY3AAh5iEO7Qiw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        :root {
+            --flutter-blue: #1e30f3;
+            --flutter-pink: #e21e80;
+            --flutter-cyan: #12c2e9;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --page-surface: #f8f9ff;
+            --expense-red: #ef4444;
+            --income-green: #22c55e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f7f8ff 0%, #ffffff 100%);
+        }
+
+        .hero-section {
+            background: radial-gradient(circle at top left, rgba(30, 48, 243, 0.08), transparent 30%), rgba(255, 255, 255, 0.8);
+            padding-top: 7rem;
+        }
+
+        .hero-card,
+        .glass-card,
+        .feature-card,
+        .check-card {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-card {
+            border-radius: 1.5rem;
+        }
+
+        .feature-card,
+        .glass-card,
+        .check-card {
+            border-radius: 1.25rem;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            border: none;
+            color: white;
+            box-shadow: 0 12px 30px rgba(30, 48, 243, 0.28);
+        }
+
+        .btn-glow:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 54px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            margin: 0.8rem auto 0;
+        }
+
+        .feature {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.85rem;
+            font-size: 1.35rem;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 20px 40px rgba(30, 48, 243, 0.14);
+        }
+
+        pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        code {
+            font-family: 'SFMono-Regular', Consolas, monospace;
+        }
+
+        .code-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 1;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.75);
+            color: #1f2937;
+            border-radius: 0.65rem;
+            font-size: 0.78rem;
+            padding: 0.35rem 0.7rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #111827;
+            color: white;
+        }
+
+        .gallery-card {
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 1.25rem;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+            background: #fff;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .documentation-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: #f8fafc;
+        }
+
+        #documentation .gallery-card img {
+            height: auto;
+            object-fit: contain;
+            transition: none;
+        }
+
+        .device-shell {
+            position: relative;
+            width: min(100%, 26rem);
+            margin: 0 auto;
+            padding: 1rem;
+            background: linear-gradient(155deg, #f5f7ff, #eef3ff);
+            border-radius: 2rem;
+            border: 4px solid rgba(30, 48, 243, 0.12);
+            box-shadow: 0 28px 60px rgba(30, 48, 243, 0.15);
+        }
+
+        .device-notch {
+            width: 7rem;
+            height: 1.1rem;
+            margin: 0 auto 1rem auto;
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 999px;
+        }
+
+        .phone-ui {
+            background: linear-gradient(180deg, #f8fbff 0%, #eef3ff 100%);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            padding: 1.25rem;
+        }
+
+        .ui-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .result-chip {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(30, 48, 243, 0.12), rgba(226, 30, 128, 0.12));
+            border: 1px solid rgba(30, 48, 243, 0.12);
+            color: var(--flutter-blue);
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+        }
+
+        .ui-field {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 0.7rem;
+            padding: 0.55rem 0.7rem;
+            margin-bottom: 0.6rem;
+        }
+
+        @media (max-width: 767px) {
+            .hero-card {
+                padding: 2rem 1.25rem !important;
+            }
+
+            .feature-card,
+            .glass-card,
+            .check-card {
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 light-mode">
+    <main class="flex-shrink-0">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-blur py-3 shadow-none">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">iMaIrsdyh</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenu" aria-controls="#navMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                        <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="praktikum.html">Praktikum</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section overflow-hidden py-6">
+            <div class="container px-5 pt-5">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6">
+                        <div class="hero-card rounded-4 p-5 reveal delay-1">
+                            <span class="badge bg-gradient-primary-to-secondary text-white mb-3">
+                                Praktikum Mobile Application 3
+                            </span>
+                            <h1 class="display-5 fw-bolder mb-4">Form Input Transaksi pada Flutter</h1>
+                            <p class="lead text-muted mb-4">
+                                Implementasi form pencatatan transaksi menggunakan TextFormField,
+                                DropdownButtonFormField, validasi input, showDatePicker, dan SnackBar pada Flutter.
+                            </p>
+                            <div class="d-flex flex-column flex-sm-row gap-3">
+                                <a class="btn btn-glow btn-lg px-4"
+                                    href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/master"
+                                    target="_blank" rel="noreferrer"><i class="fab fa-github me-2"></i>View Github</a>
+                                <a class="btn btn-outline-dark btn-lg px-4" href="praktikum-mobile.html">Back to
+                                    Projects</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 text-center">
+                        <div class="device-shell reveal delay-2">
+                            <div class="device-notch"></div>
+                            <div class="phone-ui text-start">
+                                <div class="ui-header">
+                                    <strong>Praktikum 3</strong>
+                                    <span class="result-chip">Flutter</span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-rectangle-list text-primary"></i>
+                                    <span><strong>Form</strong><br><small class="text-muted">Input transaksi</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-circle-check text-success"></i>
+                                    <span><strong>Validasi</strong><br><small class="text-muted">Periksa field wajib</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-calendar-days text-primary"></i>
+                                    <span><strong>Date Picker</strong><br><small class="text-muted">Pilih tanggal transaksi</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3 mb-0">
+                                    <i class="fa-solid fa-comment-dots text-success"></i>
+                                    <span><strong>SnackBar</strong><br><small class="text-muted">Feedback penyimpanan</small></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">1. Tujuan Praktikum</h2>
+                    <p class="text-muted">
+                        Memahami pembuatan form transaksi di Flutter menggunakan StatefulWidget, Form,
+                        TextFormField, DropdownButtonFormField, controller, validasi, dan SnackBar. Pada tugas,
+                        form dikembangkan dengan input tanggal melalui showDatePicker.
+                    </p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 reveal delay-2">
+                        <div class="feature-card rounded-4 p-4 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i class="fa-solid fa-rectangle-list"></i></div>
+                            <h5 class="fw-bold">Form Input</h5>
+                            <p class="text-muted mb-0">Mengelola judul transaksi, nominal, kategori, dan tanggal.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 reveal delay-3">
+                        <div class="feature-card rounded-4 p-4 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i class="fa-solid fa-circle-check"></i></div>
+                            <h5 class="fw-bold">Validasi</h5>
+                            <p class="text-muted mb-0">Memeriksa input sebelum transaksi dikirim.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 reveal delay-4">
+                        <div class="feature-card rounded-4 p-4 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i class="fa-solid fa-calendar-days"></i></div>
+                            <h5 class="fw-bold">Date Picker</h5>
+                            <p class="text-muted mb-0">Memilih tanggal dan menampilkannya dalam format DD/MM/YYYY.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 reveal delay-5">
+                        <div class="feature-card rounded-4 p-4 h-100">
+                            <div class="feature bg-gradient-primary-to-secondary text-white mb-3"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                            <h5 class="fw-bold">Teknologi</h5>
+                            <p class="text-muted mb-0">Flutter dengan StatefulWidget dan Material components.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="konsep" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">2. Konsep yang Digunakan</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">StatefulWidget &amp; setState()</h5><p class="text-muted mb-0">Menjaga dan memperbarui kategori serta tanggal yang dipilih selama halaman digunakan.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Form &amp; GlobalKey</h5><p class="text-muted mb-0">Mengelompokkan input dan menjalankan validator melalui GlobalKey&lt;FormState&gt;.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Controller &amp; Input</h5><p class="text-muted mb-0">TextEditingController membaca teks; TextFormField dan DropdownButtonFormField menyediakan input.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">showDatePicker</h5><p class="text-muted mb-0">Membuka kalender dan mengembalikan tanggal yang dipilih.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">SnackBar</h5><p class="text-muted mb-0">Menampilkan feedback transaksi setelah seluruh input valid.</p></div></div>
+                    <div class="col-md-6 col-lg-4"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">dispose()</h5><p class="text-muted mb-0">Melepas controller ketika State tidak lagi digunakan.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="persiapan" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">3. Persiapan Project</h2>
+                    <p class="text-muted">Project menggunakan dua file utama di dalam folder lib.</p>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <pre class="mb-0"><code>lib/
+├── main.dart
+└── add_transaction_screen.dart</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="langkah" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">4. Langkah-Langkah Praktikum</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">01. Siapkan project</h5><p class="text-muted mb-0">Buat aplikasi Flutter dan siapkan main.dart serta add_transaction_screen.dart.</p></div></div>
+                    <div class="col-lg-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">02. Buat halaman form</h5><p class="text-muted mb-0">Buat AddTransactionScreen sebagai StatefulWidget dan susun input di dalam Form.</p></div></div>
+                    <div class="col-lg-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">03. Validasi dan simpan</h5><p class="text-muted mb-0">Validasi field, pilih kategori dan tanggal, lalu tampilkan feedback SnackBar.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="implementasi-form" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">5. Implementasi Form</h2>
+                    <p class="text-muted">Form menggunakan GlobalKey&lt;FormState&gt; untuk mengoordinasikan input, sedangkan controller menyimpan teks judul, nominal, dan tanggal. SingleChildScrollView menjaga seluruh form tetap dapat diakses pada layar pendek.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Input transaksi</h5><p class="text-muted mb-0">TextFormField menerima judul dan nominal. Nominal memakai keyboard angka dan diperiksa agar merupakan bilangan bulat yang valid.</p></div></div>
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Siklus widget</h5><p class="text-muted mb-0">StatefulWidget dan setState() memperbarui pilihan kategori/tanggal. Controller dibersihkan melalui dispose().</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="validasi" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">6. Validasi Input</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">Judul</h5><p class="text-muted mb-0">Wajib diisi sebelum transaksi dapat disimpan.</p></div></div>
+                    <div class="col-md-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">Nominal</h5><p class="text-muted mb-0">Wajib diisi dan harus berupa angka bulat yang valid.</p></div></div>
+                    <div class="col-md-4"><div class="check-card rounded-4 p-4 h-100"><h5 class="fw-bold">Tanggal</h5><p class="text-muted mb-0">Tanggal transaksi wajib diisi sebelum form dinyatakan valid.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dropdown" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">7. Implementasi Dropdown Kategori</h2>
+                    <p class="text-muted">DropdownButtonFormField menyediakan pilihan kategori transaksi. Kategori awal adalah Makanan; pilihan lain meliputi Transportasi, Hiburan, dan Lainnya. Perubahan pilihan disimpan menggunakan setState().</p>
+                </div>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <span class="result-chip">Makanan</span><span class="result-chip">Transportasi</span>
+                    <span class="result-chip">Hiburan</span><span class="result-chip">Lainnya</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="tanggal" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">8. Input Tanggal Transaksi</h2>
+                    <p class="text-muted">Field Tanggal Transaksi diletakkan sebelum tombol Simpan Transaksi. Field bersifat read-only agar tanggal dipilih melalui kalender, dan wajib diisi.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">9. Implementasi showDatePicker</h5><p class="text-muted mb-0">showDatePicker menampilkan kalender dengan rentang tahun 2000 hingga 2100. Tanggal terpilih diformat menjadi DD/MM/YYYY, misalnya 15/09/2026.</p></div></div>
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Validasi tanggal</h5><p class="text-muted mb-0">Jika tanggal belum dipilih, validator menampilkan pesan “Tanggal transaksi wajib diisi” dan pengiriman form dihentikan.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="source-code" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">10. Source Code</h2>
+                    <p class="text-muted">Source code final Praktikum 3, termasuk tugas input tanggal.</p>
+                </div>
+                <h3 class="h5 fw-bold mb-3">main.dart</h3>
+                <div class="code-card glass-card rounded-4 p-4 mb-4 reveal delay-2">
+                    <button class="copy-btn" data-copy-target="main-dart">Copy Code</button>
+                    <pre><code id="main-dart">import 'package:flutter/material.dart';
+import 'add_transaction_screen.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Expense Tracker - Modul 3',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: const AddTransactionScreen(),
+    );
+  }
+}</code></pre>
+                </div>
+                <h3 class="h5 fw-bold mb-3">add_transaction_screen.dart</h3>
+                <div class="code-card glass-card rounded-4 p-4 reveal delay-3">
+                    <button class="copy-btn" data-copy-target="transaction-screen-dart">Copy Code</button>
+                    <pre><code id="transaction-screen-dart">import 'package:flutter/material.dart';
+
+class AddTransactionScreen extends StatefulWidget {
+  const AddTransactionScreen({super.key});
+
+  @override
+  State&lt;AddTransactionScreen&gt; createState() =&gt; _AddTransactionScreenState();
+}
+
+class _AddTransactionScreenState extends State&lt;AddTransactionScreen&gt; {
+  final _formKey = GlobalKey&lt;FormState&gt;();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _dateController = TextEditingController();
+
+  String _selectedCategory = 'Makanan';
+  final List&lt;String&gt; _categories = [
+    'Makanan',
+    'Transportasi',
+    'Hiburan',
+    'Lainnya',
+  ];
+
+  Future&lt;void&gt; _selectDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      final String day = pickedDate.day.toString().padLeft(2, '0');
+      final String month = pickedDate.month.toString().padLeft(2, '0');
+      final String year = pickedDate.year.toString();
+
+      setState(() {
+        _dateController.text = '$day/$month/$year';
+      });
+    }
+  }
+
+  void _saveTransaction() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Tersimpan: ${_titleController.text} '
+            '(Rp ${_amountController.text}) - ${_dateController.text}',
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Catat Transaksi Baru'),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  labelText: 'Judul Transaksi',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.title),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Judul transaksi tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Nominal (Rp)',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.attach_money),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Nominal wajib diisi';
+                  }
+                  if (int.tryParse(value) == null) {
+                    return 'Harus berupa angka bulat yang valid';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField&lt;String&gt;(
+                value: _selectedCategory,
+                decoration: const InputDecoration(
+                  labelText: 'Kategori',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.category),
+                ),
+                items: _categories.map((String category) {
+                  return DropdownMenuItem&lt;String&gt;(
+                    value: category,
+                    child: Text(category),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue == null) return;
+                  setState(() {
+                    _selectedCategory = newValue;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _dateController,
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: 'Tanggal Transaksi',
+                  hintText: 'DD/MM/YYYY',
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.calendar_today),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: _selectDate,
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Tanggal transaksi wajib diisi';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  onPressed: _saveTransaction,
+                  child: const Text('Simpan Transaksi'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="pengujian" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">11. Pengujian</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Validasi judul dan nominal</h5><p class="text-muted mb-1">Kosongkan judul atau nominal, lalu kirim form.</p><p class="text-muted mb-0"><strong>Hasil:</strong> pesan validasi muncul dan data tidak dikirim.</p></div></div>
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Validasi nominal angka</h5><p class="text-muted mb-1">Masukkan nominal yang bukan angka bulat.</p><p class="text-muted mb-0"><strong>Hasil:</strong> input ditolak oleh validator.</p></div></div>
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Validasi tanggal</h5><p class="text-muted mb-1">Kirim form tanpa memilih tanggal.</p><p class="text-muted mb-0"><strong>Hasil:</strong> “Tanggal transaksi wajib diisi”.</p></div></div>
+                    <div class="col-md-6"><div class="glass-card rounded-4 p-4 h-100"><h5 class="fw-bold">Simpan transaksi</h5><p class="text-muted mb-1">Isi SPAGGETI, 10, Makanan, dan 15/09/2026.</p><p class="text-muted mb-0"><strong>Hasil:</strong> SnackBar menampilkan transaksi tersimpan.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hasil-praktikum" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">12. Hasil Praktikum 3</h2>
+                    <p class="text-muted">Implementasi awal menggunakan tiga input: judul transaksi, nominal, dan kategori. Contoh yang diuji adalah CROISSANT, Rp 5, kategori Makanan. SnackBar berhasil menampilkan “Tersimpan: CROISSANT (Rp 5)”.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hasil-tugas" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">13. Hasil Tugas Praktikum 3</h2>
+                    <p class="text-muted">Tugas menambahkan Tanggal Transaksi sebagai input keempat dan mewajibkannya sebelum submit. Data SPAGGETI, Rp 10, Makanan, dan 15/09/2026 menghasilkan SnackBar “Tersimpan: SPAGGETI (Rp 10) - 15/09/2026”.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kesimpulan" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="row align-items-center gx-5">
+                    <div class="col-lg-8 reveal delay-1">
+                        <h2 class="display-6 fw-bold section-title mb-4 text-dark">14. Kesimpulan</h2>
+                        <p class="text-muted mb-4">Praktikum berhasil membangun form pencatatan transaksi Flutter menggunakan StatefulWidget, Form, TextFormField, DropdownButtonFormField, GlobalKey&lt;FormState&gt;, TextEditingController, dan SnackBar.</p>
+                        <p class="text-muted mb-0">Pada tugas, input tanggal ditambahkan menggunakan showDatePicker dan diformat menjadi DD/MM/YYYY. Validasi memastikan tanggal wajib dipilih sebelum transaksi tersimpan.</p>
+                    </div>
+                    <div class="col-lg-4 reveal delay-2">
+                        <div class="check-card rounded-4 p-5 h-100">
+                            <h5 class="fw-bold mb-3">Hasil Akhir</h5>
+                            <p class="text-muted mb-0">Form transaksi divalidasi dan memberikan feedback berhasil dengan tanggal yang dipilih.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">15. Dokumentasi Hasil</h2>
+                </div>
+                <div class="row gx-4 gy-4 justify-content-center">
+                    <div class="col-md-6 col-xl-4 reveal delay-2">
+                        <div class="gallery-card">
+                            <img src="assets/Screenshot 2026-09-27 232648.png" class="documentation-image"
+                                alt="Hasil Praktikum 3: form Catat Transaksi Baru dengan CROISSANT, nominal 5, kategori Makanan, dan SnackBar Tersimpan: CROISSANT (Rp 5)"
+                                loading="lazy">
+                            <div class="p-3">
+                                <h6 class="fw-bold mb-1">Hasil Praktikum 3</h6>
+                                <p class="text-muted mb-0 small">Implementasi awal form pencatatan transaksi menggunakan input judul, nominal, dan kategori serta validasi dan feedback menggunakan SnackBar.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 reveal delay-3">
+                        <div class="gallery-card">
+                            <img src="assets/Screenshot 2026-09-27 233036.png" class="documentation-image"
+                                alt="Hasil Tugas Praktikum 3: form dengan SPAGGETI, nominal 10, kategori Makanan, tanggal 15/09/2026, dan SnackBar Tersimpan: SPAGGETI (Rp 10) - 15/09/2026"
+                                loading="lazy">
+                            <div class="p-3">
+                                <h6 class="fw-bold mb-1">Hasil Tugas Praktikum 3</h6>
+                                <p class="text-muted mb-0 small">Implementasi akhir setelah penambahan input Tanggal Transaksi menggunakan showDatePicker dan validasi wajib diisi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="author" class="py-5">
+            <div class="container px-5">
+                <div class="glass-card rounded-4 p-5 reveal delay-1">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-4 text-center">
+                            <div class="feature bg-gradient-primary-to-secondary text-white rounded-circle mx-auto mb-3"
+                                style="width: 4rem; height: 4rem;"><i class="fa-solid fa-user"></i></div>
+                            <h3 class="fw-bold mb-1">Karimah Irsyadiyah</h3>
+                            <p class="text-muted mb-0">Mahasiswa Informatika, Universitas Andalas</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <h5 class="fw-bold mb-3">Profil Profesional</h5>
+                            <p class="text-muted mb-4">Karimah Irsyadiyah adalah mahasiswa Informatika di Universitas Andalas yang menekuni pengembangan aplikasi mobile menggunakan Flutter serta dokumentasi hasil praktikum secara rapi dan profesional.</p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a class="btn btn-outline-dark btn-sm" href="https://github.com/iMaIrsdyh" target="_blank" rel="noreferrer"><i class="fab fa-github me-2"></i>GitHub</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://www.instagram.com/ima_irsdyh/" target="_blank" rel="noreferrer"><i class="fab fa-instagram me-2"></i>Instagram</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://www.linkedin.com/in/karimah-irsyadiyah-1605092a5/" target="_blank" rel="noreferrer"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://wa.me/6285174120405" target="_blank" rel="noreferrer"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a>
+                                <a class="btn btn-outline-dark btn-sm" href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/master" target="_blank" rel="noreferrer"><i class="fa-solid fa-folder-open me-2"></i>Repository Flutter</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div></div>
+                <div class="col-auto">
+                    <a class="small" href="#">Privacy</a><span class="mx-1">&middot;</span>
+                    <a class="small" href="#">Terms</a><span class="mx-1">&middot;</span>
+                    <a class="small" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="./js/javascript.js"></script>
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-copy-target');
+                const code = document.getElementById(targetId);
+                if (!code) return;
+
+                navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    setTimeout(function () {
+                        button.textContent = originalText;
+                    }, 1200);
+                }).catch(function () {
+                    button.textContent = 'Failed';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
