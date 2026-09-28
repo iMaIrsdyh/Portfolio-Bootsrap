@@ -281,6 +281,48 @@
             min-width: 680px;
         }
 
+        .praktikum4-doc-grid {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            align-items: start;
+        }
+
+        .praktikum4-doc-card {
+            width: 100%;
+            max-width: 340px;
+            justify-self: center;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 12px;
+            box-sizing: border-box;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .praktikum4-doc-card img {
+            display: block;
+            width: 100%;
+            max-width: 316px;
+            height: 260px;
+            margin: 0 auto;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+
+        .praktikum4-doc-card p {
+            margin: 12px 4px 4px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+        }
+
         @media (max-width: 767px) {
             .hero-card {
                 padding: 2rem 1.25rem !important;
@@ -291,6 +333,15 @@
             .check-card,
             .result-card {
                 padding: 1.5rem !important;
+            }
+
+            .praktikum4-doc-grid {
+                grid-template-columns: 1fr;
+                max-width: 360px;
+            }
+
+            .praktikum4-doc-card img {
+                height: 220px;
             }
         }
     </style>
@@ -692,16 +743,6 @@ void main() {
             </div>
         </section>
 
-        <section id="documentation" class="py-5 bg-white">
-            <div class="container px-5">
-                <div class="gallery-card p-3 reveal delay-1">
-                    <img class="documentation-image" src="./assets/praktikum4-dashboard.png"
-                        alt="Dashboard Keuangan Expense Tracker Praktikum Mobile Application 4" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 1. Tampilan Dashboard Keuangan</p>
-            </div>
-        </section>
-
         <section id="catat-transaksi" class="py-5">
             <div class="container px-5">
                 <div class="text-center mb-4 reveal delay-1">
@@ -721,16 +762,6 @@ void main() {
 );</code></pre>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="catat-transaksi-image" class="py-5 bg-white">
-            <div class="container px-5">
-                <div class="gallery-card p-3 reveal delay-1">
-                    <img class="documentation-image" src="./assets/praktikum4-form-transaksi.png"
-                        alt="Halaman Catat Transaksi dengan Form Input Pencatatan Flutter" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 2. Halaman Catat Transaksi</p>
             </div>
         </section>
 
@@ -829,26 +860,6 @@ if (_formKey.currentState!.validate()) {
             </div>
         </section>
 
-        <section id="detail-makan" class="py-5 bg-white">
-            <div class="container px-5">
-                <div class="gallery-card p-3 reveal delay-1">
-                    <img class="documentation-image" src="./assets/praktikum4-detail-makan.png"
-                        alt="Detail Transaksi Makan Siang Praktikum Mobile Application 4" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 3. Detail Transaksi Makan Siang</p>
-            </div>
-        </section>
-
-        <section id="detail-gaji" class="py-5">
-            <div class="container px-5">
-                <div class="gallery-card p-3 reveal delay-1">
-                    <img class="documentation-image" src="./assets/praktikum4-detail-gaji.png"
-                        alt="Detail Transaksi Gaji Bulanan Praktikum Mobile Application 4" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 4. Detail Transaksi Gaji Bulanan</p>
-            </div>
-        </section>
-
         <section id="tanggal" class="py-5 bg-white">
             <div class="container px-5">
                 <div class="text-center mb-4 reveal delay-1">
@@ -914,31 +925,6 @@ if (_formKey.currentState!.validate()) {
                         pemilihan dari popup kalender. readOnly membuat input tidak bisa diketik manual, sementara
                         validator memastikan tanggal wajib diisi.</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="tanggal-screenshot" class="py-5 bg-white">
-            <div class="container px-5">
-                <div class="gallery-card p-3 reveal delay-1">
-                    <img class="documentation-image" src="./assets/praktikum4-input-tanggal.png"
-                        alt="Form Catat Transaksi dengan Input Tanggal Flutter" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 5. Implementasi Input Tanggal Transaksi</p>
-            </div>
-        </section>
-
-        <section id="submit" class="py-5">
-            <div class="container px-5">
-                <div class="text-center mb-4 reveal delay-1">
-                    <h2 class="display-6 fw-bold section-title text-dark">20. Hasil Submit</h2>
-                </div>
-                <div class="gallery-card p-3 reveal delay-2">
-                    <img class="documentation-image" src="./assets/praktikum4-dashboard-snackbar.png"
-                        alt="Dashboard dengan SnackBar Transaksi Berhasil Disimpan" />
-                </div>
-                <p class="text-center text-muted mt-3 mb-0">Gambar 6. Hasil Submit Transaksi</p>
-                <p class="text-muted mt-3 mb-0 text-center">Setelah form berhasil divalidasi, SnackBar ditampilkan dan
-                    Navigator.pop() dijalankan sehingga pengguna kembali ke Dashboard.</p>
             </div>
         </section>
 
@@ -1091,6 +1077,46 @@ if (_formKey.currentState!.validate()) {
                             <p class="text-muted mb-0">Berhasil menerapkan showDatePicker() dan format DD/MM/YYYY.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5" id="dokumentasi-hasil">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">15. Dokumentasi Hasil</h2>
+                </div>
+                <div class="praktikum4-doc-grid">
+                    <article class="praktikum4-doc-card reveal delay-2">
+                        <img src="./assets/praktikum4-dashboard.png"
+                            alt="Dashboard Keuangan Expense Tracker Praktikum Mobile Application 4" />
+                        <p>Gambar 1. Tampilan Dashboard Keuangan</p>
+                    </article>
+                    <article class="praktikum4-doc-card reveal delay-2">
+                        <img src="./assets/praktikum4-form-transaksi.png"
+                            alt="Halaman Catat Transaksi Expense Tracker Praktikum Mobile Application 4" />
+                        <p>Gambar 2. Halaman Catat Transaksi</p>
+                    </article>
+                    <article class="praktikum4-doc-card reveal delay-3">
+                        <img src="./assets/praktikum4-detail-makan.png"
+                            alt="Detail Transaksi Makan Siang Praktikum Mobile Application 4" />
+                        <p>Gambar 3. Detail Transaksi Makan Siang</p>
+                    </article>
+                    <article class="praktikum4-doc-card reveal delay-3">
+                        <img src="./assets/praktikum4-detail-gaji.png"
+                            alt="Detail Transaksi Gaji Bulanan Praktikum Mobile Application 4" />
+                        <p>Gambar 4. Detail Transaksi Gaji Bulanan</p>
+                    </article>
+                    <article class="praktikum4-doc-card reveal delay-4">
+                        <img src="./assets/praktikum4-input-tanggal.png"
+                            alt="Input Tanggal Transaksi menggunakan Date Picker Praktikum Mobile Application 4" />
+                        <p>Gambar 5. Implementasi Input Tanggal Transaksi</p>
+                    </article>
+                    <article class="praktikum4-doc-card reveal delay-4">
+                        <img src="./assets/praktikum4-dashboard-snackbar.png"
+                            alt="Dashboard dengan SnackBar Transaksi Berhasil Disimpan Praktikum Mobile Application 4" />
+                        <p>Gambar 6. Hasil Submit Transaksi</p>
+                    </article>
                 </div>
             </div>
         </section>
