@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dokumentasi Praktikum Mobile Application 4 tentang Navigator, Navigator.push(), Navigator.pop(), Stack, Constructor, Passing Data, Form Validation, dan Date Picker pada Flutter.">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Praktikum Mobile Application 4 — Navigasi & Passing Data Flutter</title>
+
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        :root {
+            --flutter-blue: #1e30f3;
+            --flutter-pink: #e21e80;
+            --flutter-cyan: #12c2e9;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --page-surface: #f8f9ff;
+            --expense-red: #ef4444;
+            --income-green: #22c55e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f7f8ff 0%, #ffffff 100%);
+        }
+
+        .hero-section {
+            background: radial-gradient(circle at top left, rgba(30, 48, 243, 0.08), transparent 30%), rgba(255, 255, 255, 0.8);
+            padding-top: 7rem;
+        }
+
+        .hero-card,
+        .glass-card,
+        .feature-card,
+        .check-card,
+        .result-card {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-card {
+            border-radius: 1.5rem;
+        }
+
+        .feature-card,
+        .glass-card,
+        .check-card,
+        .result-card {
+            border-radius: 1.25rem;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            border: none;
+            color: white;
+            box-shadow: 0 12px 30px rgba(30, 48, 243, 0.28);
+        }
+
+        .btn-glow:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 54px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            margin: 0.8rem auto 0;
+        }
+
+        .feature {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.85rem;
+            font-size: 1.35rem;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 20px 40px rgba(30, 48, 243, 0.14);
+        }
+
+        pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        code {
+            font-family: 'SFMono-Regular', Consolas, monospace;
+        }
+
+        .code-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 1;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.75);
+            color: #1f2937;
+            border-radius: 0.65rem;
+            font-size: 0.78rem;
+            padding: 0.35rem 0.7rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #111827;
+            color: white;
+        }
+
+        .gallery-card {
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 1.25rem;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+            background: #fff;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .documentation-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: #f8fafc;
+        }
+
+        #documentation .gallery-card img {
+            height: auto;
+            object-fit: contain;
+            transition: none;
+        }
+
+        .device-shell {
+            position: relative;
+            width: min(100%, 26rem);
+            margin: 0 auto;
+            padding: 1rem;
+            background: linear-gradient(155deg, #f5f7ff, #eef3ff);
+            border-radius: 2rem;
+            border: 4px solid rgba(30, 48, 243, 0.12);
+            box-shadow: 0 28px 60px rgba(30, 48, 243, 0.15);
+        }
+
+        .device-notch {
+            width: 7rem;
+            height: 1.1rem;
+            margin: 0 auto 1rem auto;
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 999px;
+        }
+
+        .phone-ui {
+            background: linear-gradient(180deg, #f8fbff 0%, #eef3ff 100%);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            padding: 1.25rem;
+        }
+
+        .ui-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .result-chip {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(30, 48, 243, 0.12), rgba(226, 30, 128, 0.12));
+            border: 1px solid rgba(30, 48, 243, 0.12);
+            color: var(--flutter-blue);
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+        }
+
+        .ui-field {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 0.7rem;
+            padding: 0.55rem 0.7rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .praktikum4-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 30rem;
+            margin: 1.25rem auto;
+        }
+
+        .praktikum4-stack .stack-node {
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            border-radius: 0.9rem;
+            padding: 0.9rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .praktikum4-stack .stack-arrow {
+            text-align: center;
+            color: #1e30f3;
+            font-size: 1.2rem;
+        }
+
+        .praktikum4-diagram {
+            display: grid;
+            gap: 0.8rem;
+            max-width: 38rem;
+            margin: 1.25rem auto 0;
+        }
+
+        .praktikum4-diagram .diagram-step {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 0.9rem;
+            padding: 0.7rem 0.9rem;
+            text-align: center;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .praktikum4-diagram .diagram-step small {
+            display: block;
+            color: #475569;
+            margin-top: 0.2rem;
+            font-weight: 500;
+        }
+
+        .praktikum4-diagram .diagram-arrow {
+            text-align: center;
+            color: var(--flutter-pink);
+            font-size: 1.2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 680px;
+        }
+
+        @media (max-width: 767px) {
+            .hero-card {
+                padding: 2rem 1.25rem !important;
+            }
+
+            .feature-card,
+            .glass-card,
+            .check-card,
+            .result-card {
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 light-mode">
+    <main class="flex-shrink-0">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-blur py-3 shadow-none">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">iMaIrsdyh</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenu" aria-controls="#navMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                        <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="praktikum.html">Praktikum</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section overflow-hidden py-6">
+            <div class="container px-5 pt-5">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-7">
+                        <div class="hero-card rounded-4 p-5 reveal delay-1">
+                            <span class="badge bg-gradient-primary-to-secondary text-white mb-3">
+                                Praktikum Mobile Application 4
+                            </span>
+                            <h1 class="display-5 fw-bolder mb-4">Praktikum Mobile Application 4</h1>
+                            <p class="lead text-muted mb-4">
+                                "Navigasi & Passing Data Navigator, Konsep Stack, dan Constructor"
+                            </p>
+                            <p class="text-muted mb-4">
+                                Implementasi navigasi antarhalaman pada Flutter menggunakan Navigator, konsep Stack,
+                                constructor, passing data, serta input tanggal menggunakan showDatePicker.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge bg-light text-dark border">Flutter</span>
+                                <span class="badge bg-light text-dark border">Navigator</span>
+                                <span class="badge bg-light text-dark border">Navigation</span>
+                                <span class="badge bg-light text-dark border">Passing Data</span>
+                                <span class="badge bg-light text-dark border">Constructor</span>
+                                <span class="badge bg-light text-dark border">Form</span>
+                                <span class="badge bg-light text-dark border">Date Picker</span>
+                            </div>
+                            <div class="d-flex flex-column flex-sm-row gap-3">
+                                <a class="btn btn-glow btn-lg px-4"
+                                    href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_04practice"
+                                    target="_blank" rel="noreferrer">
+                                    <i class="fab fa-github me-2"></i>View GitHub
+                                </a>
+                                <a class="btn btn-outline-dark btn-lg px-4" href="praktikum-mobile.html">Back to
+                                    Projects</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 text-center">
+                        <div class="device-shell reveal delay-2">
+                            <div class="device-notch"></div>
+                            <div class="phone-ui text-start">
+                                <div class="ui-header">
+                                    <strong>Expense Tracker</strong>
+                                    <span class="result-chip">Modul 4</span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-wallet text-primary"></i>
+                                    <span><strong>Dashboard</strong><br><small class="text-muted">Saldo &
+                                            transaksi</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-right-left text-success"></i>
+                                    <span><strong>Navigator</strong><br><small class="text-muted">Push &
+                                            pop</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-database text-primary"></i>
+                                    <span><strong>Passing Data</strong><br><small
+                                            class="text-muted">Constructor</small></span>
+                                </div>
+                                <div class="ui-field d-flex align-items-center gap-3 mb-0">
+                                    <i class="fa-solid fa-calendar-days text-success"></i>
+                                    <span><strong>Date Picker</strong><br><small
+                                            class="text-muted">DD/MM/YYYY</small></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">2. Informasi Praktikum</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-6 reveal delay-2">
+                        <div class="feature-card rounded-4 p-4 h-100">
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Mata Kuliah</p>
+                                    <h6 class="fw-bold mb-0">Mobile Application</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Praktikum</p>
+                                    <h6 class="fw-bold mb-0">4</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Project</p>
+                                    <h6 class="fw-bold mb-0">Expense Tracker - Modul 4</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Topik</p>
+                                    <h6 class="fw-bold mb-0">Navigasi & Passing Data</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Repository</p>
+                                    <h6 class="fw-bold mb-0">Flutter-Mobile-Application</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-muted mb-1">Folder</p>
+                                    <h6 class="fw-bold mb-0">flutter_04practice</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 reveal delay-3">
+                        <div class="feature-card rounded-4 p-4 h-100 d-flex flex-column justify-content-center">
+                            <p class="text-muted mb-2">GitHub Project</p>
+                            <h5 class="fw-bold mb-3">Flutter Mobile Application 4</h5>
+                            <a class="btn btn-glow btn-lg px-4 w-fit"
+                                href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_04practice"
+                                target="_blank" rel="noreferrer">
+                                <i class="fab fa-github me-2"></i>View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tujuan" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">3. Tujuan Praktikum</h2>
+                    <p class="text-muted">
+                        Praktikum ini bertujuan untuk memahami dan menerapkan navigasi antarhalaman pada Flutter
+                        menggunakan Navigator, konsep Stack, constructor, passing data, form transaksi, dan validasi
+                        input.
+                    </p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">1. Memahami konsep Navigator pada Flutter.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">2. Memahami Navigator.push().</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-2">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">3. Memahami Navigator.pop().</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">4. Memahami konsep Stack dalam navigasi.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">5. Memahami constructor pada widget.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-3">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">6. Memahami passing data antar halaman.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">7. Membuat halaman Dashboard.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">8. Membuat halaman Catat Transaksi.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-4">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">9. Membuat halaman Detail Transaksi.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-5">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">10. Membuat input tanggal menggunakan showDatePicker().</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-5">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <p class="mb-0 text-muted">11. Menerapkan validasi form.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="teori" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">4. Dasar Teori</h2>
+                </div>
+
+                <div class="glass-card rounded-4 p-4 mb-4 reveal delay-2">
+                    <h3 class="fw-bold mb-3">4.1 Navigator</h3>
+                    <p class="text-muted mb-3">
+                        Navigator merupakan widget Flutter yang digunakan untuk mengatur perpindahan antar route atau
+                        halaman. Dalam konsep navigasi, halaman baru ditumpuk di atas halaman sebelumnya seperti stack.
+                    </p>
+                    <div class="praktikum4-stack">
+                        <div class="stack-node">Dashboard</div>
+                        <div class="stack-arrow">↓</div>
+                        <div class="stack-node">Catat Transaksi</div>
+                        <div class="stack-arrow">↓</div>
+                        <div class="stack-node">Detail Transaksi</div>
+                    </div>
+                    <p class="text-muted mb-0">Halaman yang terakhir dibuka berada di atas stack.</p>
+                </div>
+
+                <div class="glass-card rounded-4 p-4 mb-4 reveal delay-3">
+                    <h3 class="fw-bold mb-3">4.2 Navigator.push()</h3>
+                    <p class="text-muted mb-3">Push digunakan untuk membuka halaman baru dan menempatkannya di atas
+                        halaman yang sedang aktif.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => const AddTransactionScreen(),
+  ),
+);</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Bagian penting dari kode di atas adalah context yang mengacu pada
+                        lokasi navigasi saat ini dan MaterialPageRoute yang menentukan halaman tujuan.</p>
+                </div>
+
+                <div class="glass-card rounded-4 p-4 mb-4 reveal delay-4">
+                    <h3 class="fw-bold mb-3">4.3 Navigator.pop()</h3>
+                    <p class="text-muted mb-3">Pop digunakan untuk menutup halaman aktif dan kembali ke halaman
+                        sebelumnya.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>Navigator.pop(context);</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Dalam aplikasi Expense Tracker, setelah form validasi berhasil,
+                        halaman Catat Transaksi ditutup dan pengguna kembali ke Dashboard.</p>
+                </div>
+
+                <div class="glass-card rounded-4 p-4 mb-4 reveal delay-5">
+                    <h3 class="fw-bold mb-3">4.4 Konsep Stack</h3>
+                    <p class="text-muted mb-3">Flutter menggunakan struktur stack dalam navigasi. Halaman yang paling
+                        baru dibuka berada di posisi paling atas.</p>
+                    <div class="praktikum4-stack">
+                        <div class="stack-node">Dashboard</div>
+                        <div class="stack-arrow">↓ push</div>
+                        <div class="stack-node">Catat Transaksi</div>
+                        <div class="stack-arrow">↓ pop</div>
+                        <div class="stack-node">Dashboard</div>
+                    </div>
+                    <div class="praktikum4-stack mt-4">
+                        <div class="stack-node">Dashboard</div>
+                        <div class="stack-arrow">↓ push</div>
+                        <div class="stack-node">Detail Transaksi</div>
+                        <div class="stack-arrow">↓ pop</div>
+                        <div class="stack-node">Dashboard</div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-4 p-4 reveal delay-6">
+                    <h3 class="fw-bold mb-3">4.5 Constructor & Passing Data</h3>
+                    <p class="text-muted mb-3">Data transaksi dikirim dari Dashboard ke halaman Detail melalui
+                        constructor. Parameter dibuat required agar data wajib diberikan saat widget dibuat.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>const TransactionDetailScreen(
+  title: 'Makan Siang',
+  amount: '- Rp 50.000',
+  category: 'Makanan',
+  date: '13 September 2026',
+);</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Data yang dikirim pada halaman detail meliputi title, amount,
+                        category, dan date.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="struktur-project" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">5. Struktur Project</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <pre class="mb-0"><code>lib/
+├── main.dart
+├── dashboard_screen.dart
+├── add_transaction_screen.dart
+└── transaction_detail_screen.dart</code></pre>
+                </div>
+                <div class="row g-4 mt-3">
+                    <div class="col-md-6 col-lg-3 reveal delay-3">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <h6 class="fw-bold">main.dart</h6>
+                            <p class="text-muted mb-0">Entry point aplikasi dan menentukan DashboardScreen sebagai
+                                halaman awal.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal delay-3">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <h6 class="fw-bold">dashboard_screen.dart</h6>
+                            <p class="text-muted mb-0">Menampilkan Dashboard Keuangan, saldo, transaksi, dan tombol
+                                tambah.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal delay-4">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <h6 class="fw-bold">add_transaction_screen.dart</h6>
+                            <p class="text-muted mb-0">Halaman untuk masuk data transaksi dan proses validasi form.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal delay-4">
+                        <div class="glass-card rounded-4 p-4 h-100">
+                            <h6 class="fw-bold">transaction_detail_screen.dart</h6>
+                            <p class="text-muted mb-0">Halaman detail transaksi yang menerima data melalui constructor.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="main-dart" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">6. Langkah 1 — Membuat main.dart</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>import 'package:flutter/material.dart';
+import 'dashboard_screen.dart';
+
+void main() {
+  runApp(const MyApp());
+}</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">main.dart merupakan entry point aplikasi. Bagian penting adalah
+                        home: const DashboardScreen(), yang menentukan Dashboard sebagai halaman pertama yang dibuka.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">7. Langkah 2 — Membuat Dashboard Keuangan</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <p class="text-muted mb-3">Dashboard dibuat dengan beberapa komponen utama: AppBar, sapaan pengguna,
+                        saldo utama, daftar transaksi, serta FloatingActionButton.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>floatingActionButton: FloatingActionButton(
+  backgroundColor: Colors.red,
+  foregroundColor: Colors.white,
+  child: const Icon(Icons.add),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddTransactionScreen(),
+      ),
+    );
+  },
+),</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Ketika tombol + ditekan, Navigator.push() digunakan untuk membuka
+                        halaman Catat Transaksi. MaterialPageRoute menandai widget tujuan yang akan dibuka.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="gallery-card p-3 reveal delay-1">
+                    <img class="documentation-image" src="./assets/praktikum4-dashboard.png"
+                        alt="Dashboard Keuangan Expense Tracker Praktikum Mobile Application 4" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 1. Tampilan Dashboard Keuangan</p>
+            </div>
+        </section>
+
+        <section id="catat-transaksi" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">9. Langkah 3 — Navigasi ke Halaman Catat
+                        Transaksi</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <p class="text-muted mb-3">Saat tombol + pada Dashboard ditekan, aplikasi menggunakan
+                        Navigator.push() untuk membuka halaman AddTransactionScreen. Halaman baru diletakkan di atas
+                        stack, sehingga halaman sebelumnya masih tersedia di bawahnya.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => const AddTransactionScreen(),
+  ),
+);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="catat-transaksi-image" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="gallery-card p-3 reveal delay-1">
+                    <img class="documentation-image" src="./assets/praktikum4-form-transaksi.png"
+                        alt="Halaman Catat Transaksi dengan Form Input Pencatatan Flutter" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 2. Halaman Catat Transaksi</p>
+            </div>
+        </section>
+
+        <section id="form-validation" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">11. Langkah 4 — Form dan Validasi</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <p class="text-muted mb-3">Halaman Catat Transaksi menggunakan GlobalKey&lt;FormState&gt;,
+                        TextEditingController, serta TextFormField untuk mengambil dan memvalidasi input pengguna.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>final _formKey = GlobalKey&lt;FormState&gt;();
+final _titleController = TextEditingController();
+final _amountController = TextEditingController();</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-2">Controller digunakan untuk mengambil nilai dari input. Validasi form
+                        dilakukan dengan validator untuk memastikan judul dan nominal tidak kosong.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border mt-3">
+                        <pre><code>validator: (value) =>
+    value!.isEmpty ? "Tidak boleh kosong" : null,
+
+if (_formKey.currentState!.validate()) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Transaksi Berhasil Disimpan!'),
+      backgroundColor: Colors.green,
+    ),
+  );
+
+  Navigator.pop(context);
+}</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Jika validasi berhasil, SnackBar ditampilkan dan Navigator.pop()
+                        dipanggil untuk kembali ke Dashboard.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="detail" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">12. Langkah 5 — Detail Transaksi</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <p class="text-muted mb-3">File transaction_detail_screen.dart didefinisikan sebagai StatelessWidget
+                        dengan variabel dan constructor yang menerima data dari halaman sebelumnya.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>class TransactionDetailScreen extends StatelessWidget {
+  final String title;
+  final String amount;
+  final String category;
+  final String date;
+
+  const TransactionDetailScreen({
+    super.key,
+    required this.title,
+    required this.amount,
+    required this.category,
+    required this.date,
+  });
+}</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Masing-masing parameter menerima data yang dikirim dari Dashboard,
+                        sehingga halaman Detail dapat menampilkan informasi sesuai transaksi yang dipilih.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="passing-data" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">13. Passing Data</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <div class="praktikum4-diagram">
+                        <div class="diagram-step">Dashboard</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">
+                            title<br><small>amount</small><br><small>category</small><br><small>date</small></div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">TransactionDetailScreen</div>
+                    </div>
+                    <div class="code-card p-3 rounded-4 bg-light border mt-4">
+                        <pre><code>TransactionDetailScreen(
+  title: 'Makan Siang',
+  amount: '- Rp 50.000',
+  category: 'Makanan',
+  date: '13 September 2026',
+)</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Data dikirim saat Navigator.push() membuat halaman detail. Dengan
+                        demikian, halaman tujuan dapat menampilkan informasi yang sesuai dengan transaksi yang dipilih.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="detail-makan" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="gallery-card p-3 reveal delay-1">
+                    <img class="documentation-image" src="./assets/praktikum4-detail-makan.png"
+                        alt="Detail Transaksi Makan Siang Praktikum Mobile Application 4" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 3. Detail Transaksi Makan Siang</p>
+            </div>
+        </section>
+
+        <section id="detail-gaji" class="py-5">
+            <div class="container px-5">
+                <div class="gallery-card p-3 reveal delay-1">
+                    <img class="documentation-image" src="./assets/praktikum4-detail-gaji.png"
+                        alt="Detail Transaksi Gaji Bulanan Praktikum Mobile Application 4" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 4. Detail Transaksi Gaji Bulanan</p>
+            </div>
+        </section>
+
+        <section id="tanggal" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">16. Latihan / Tugas — Input Tanggal</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <p class="text-muted mb-3">Pada latihan, ditambahkan input Tanggal Transaksi sebelum tombol Simpan.
+                        Ketentuannya adalah menggunakan TextFormField, format DD/MM/YYYY, tombol + untuk memilih
+                        tanggal, dan validasi agar tanggal wajib diisi.</p>
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>Future<void> _selectDate(BuildContext context) async {
+  final DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2100),
+  );
+
+  if (pickedDate != null) {
+    final String day = pickedDate.day.toString().padLeft(2, '0');
+    final String month = pickedDate.month.toString().padLeft(2, '0');
+    final String year = pickedDate.year.toString();
+
+    setState(() {
+      _dateController.text = '$day/$month/$year';
+    });
+  }
+}</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">showDatePicker membuka kalender, pickedDate menyimpan tanggal yang
+                        dipilih, lalu date diformat menjadi DD/MM/YYYY dengan setState() memperbarui TextFormField.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tanggal-input" class="py-5">
+            <div class="container px-5">
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <div class="code-card p-3 rounded-4 bg-light border">
+                        <pre><code>TextFormField(
+  controller: _dateController,
+  readOnly: true,
+  decoration: InputDecoration(
+    labelText: "Tanggal Transaksi",
+    border: const OutlineInputBorder(),
+    prefixIcon: const Icon(Icons.calendar_today),
+    suffixIcon: IconButton(
+      icon: const Icon(Icons.add),
+      onPressed: () {
+        _selectDate(context);
+      },
+    ),
+  ),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return "Tanggal transaksi wajib diisi";
+    }
+    return null;
+  },
+)</code></pre>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Field tanggal menggunakan controller untuk menampilkan hasil
+                        pemilihan dari popup kalender. readOnly membuat input tidak bisa diketik manual, sementara
+                        validator memastikan tanggal wajib diisi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tanggal-screenshot" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="gallery-card p-3 reveal delay-1">
+                    <img class="documentation-image" src="./assets/praktikum4-input-tanggal.png"
+                        alt="Form Catat Transaksi dengan Input Tanggal Flutter" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 5. Implementasi Input Tanggal Transaksi</p>
+            </div>
+        </section>
+
+        <section id="submit" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">20. Hasil Submit</h2>
+                </div>
+                <div class="gallery-card p-3 reveal delay-2">
+                    <img class="documentation-image" src="./assets/praktikum4-dashboard-snackbar.png"
+                        alt="Dashboard dengan SnackBar Transaksi Berhasil Disimpan" />
+                </div>
+                <p class="text-center text-muted mt-3 mb-0">Gambar 6. Hasil Submit Transaksi</p>
+                <p class="text-muted mt-3 mb-0 text-center">Setelah form berhasil divalidasi, SnackBar ditampilkan dan
+                    Navigator.pop() dijalankan sehingga pengguna kembali ke Dashboard.</p>
+            </div>
+        </section>
+
+        <section id="alur-aplikasi" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">21. Alur Aplikasi</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <div class="praktikum4-diagram">
+                        <div class="diagram-step">Dashboard</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">tekan +</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Catat Transaksi</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Simpan</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Validasi Form</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">SnackBar</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Navigator.pop()</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Dashboard</div>
+                    </div>
+                    <div class="praktikum4-diagram mt-5">
+                        <div class="diagram-step">Dashboard</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">klik transaksi</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">Navigator.push()</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">TransactionDetailScreen</div>
+                        <div class="diagram-arrow">↓</div>
+                        <div class="diagram-step">
+                            title<br><small>amount</small><br><small>category</small><br><small>date</small></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pengujian" class="py-5">
+            <div class="container px-5">
+                <div class="text-center mb-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">22. Pengujian</h2>
+                </div>
+                <div class="glass-card rounded-4 p-4 reveal delay-2">
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Pengujian</th>
+                                    <th>Input / Aksi</th>
+                                    <th>Hasil</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Membuka aplikasi</td>
+                                    <td>Run aplikasi</td>
+                                    <td><span class="badge bg-success">Dashboard tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Membuka Catat Transaksi</td>
+                                    <td>Klik tombol +</td>
+                                    <td><span class="badge bg-success">Halaman Catat Transaksi tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Input transaksi</td>
+                                    <td>SPAGGETI, 20000</td>
+                                    <td><span class="badge bg-success">Data diterima form</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Simpan transaksi</td>
+                                    <td>Klik Simpan</td>
+                                    <td><span class="badge bg-success">SnackBar berhasil tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Detail Makan Siang</td>
+                                    <td>Klik Makan Siang</td>
+                                    <td><span class="badge bg-success">Detail tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Detail Gaji Bulanan</td>
+                                    <td>Klik Gaji Bulanan</td>
+                                    <td><span class="badge bg-success">Detail tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Input tanggal</td>
+                                    <td>Pilih 28/09/2026</td>
+                                    <td><span class="badge bg-success">Tanggal tampil</span></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Validasi tanggal</td>
+                                    <td>Kosongkan tanggal</td>
+                                    <td><span class="badge bg-success">Validasi dijalankan</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hasil" class="py-5 bg-white">
+            <div class="container px-5">
+                <div class="text-center mb-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">23. Hasil yang Dicapai</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 reveal delay-2">
+                        <div class="result-card rounded-4 p-4 h-100">
+                            <h5 class="fw-bold">Navigator</h5>
+                            <p class="text-muted mb-0">Berhasil menerapkan perpindahan halaman menggunakan Navigator.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-3">
+                        <div class="result-card rounded-4 p-4 h-100">
+                            <h5 class="fw-bold">Stack Navigation</h5>
+                            <p class="text-muted mb-0">Berhasil memahami mekanisme push dan pop.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-4">
+                        <div class="result-card rounded-4 p-4 h-100">
+                            <h5 class="fw-bold">Passing Data</h5>
+                            <p class="text-muted mb-0">Berhasil mengirim title, amount, category, dan date melalui
+                                constructor.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-5">
+                        <div class="result-card rounded-4 p-4 h-100">
+                            <h5 class="fw-bold">Form Validation</h5>
+                            <p class="text-muted mb-0">Berhasil menerapkan validasi pada input transaksi.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 reveal delay-5">
+                        <div class="result-card rounded-4 p-4 h-100">
+                            <h5 class="fw-bold">Date Picker</h5>
+                            <p class="text-muted mb-0">Berhasil menerapkan showDatePicker() dan format DD/MM/YYYY.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kesimpulan" class="py-5">
+            <div class="container px-5">
+                <div class="glass-card rounded-4 p-4 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark text-center">24. Kesimpulan</h2>
+                    <p class="text-muted mb-2">Pada Praktikum Mobile Application 4 telah berhasil diterapkan konsep
+                        navigasi antarhalaman pada Flutter menggunakan Navigator, Navigator.push(), Navigator.pop(),
+                        konsep Stack, constructor, dan passing data. Aplikasi Expense Tracker memiliki halaman
+                        Dashboard, Catat Transaksi, dan Detail Transaksi. Data transaksi dapat dikirim dari Dashboard ke
+                        halaman Detail melalui constructor.</p>
+                    <p class="text-muted mb-0">Pada latihan, berhasil ditambahkan input Tanggal Transaksi menggunakan
+                        TextFormField, tombol +, showDatePicker(), format DD/MM/YYYY, serta validasi agar tanggal wajib
+                        diisi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="github" class="py-5 bg-white">
+            <div class="container px-5 text-center">
+                <div class="glass-card rounded-4 p-5 reveal delay-1">
+                    <h2 class="display-6 fw-bold section-title text-dark">25. Source Code</h2>
+                    <a class="btn btn-glow btn-lg px-4 mt-3"
+                        href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_04practice"
+                        target="_blank" rel="noreferrer">
+                        <i class="fab fa-github me-2"></i>View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div>
+                </div>
+                <div class="col-auto"><a class="small footer-link text-decoration-none" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="./js/javascript.js"></script>
+</body>
+
+</html>
