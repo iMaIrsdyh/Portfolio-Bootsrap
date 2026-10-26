@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dokumentasi Expense Tracker Final, integrasi Praktikum Mobile Application 1–5 menggunakan Flutter, named routes, BottomNavigationBar, dan SQLite.">
+    <meta name="author" content="Karimah Irsyadiyah">
+    <title>Praktikum Mobile Application 5 — Expense Tracker Final</title>
+
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        :root {
+            --flutter-blue: #1e30f3;
+            --flutter-pink: #e21e80;
+            --page-surface: #f7f8ff;
+            --ink: #1f2937;
+            --muted: #64748b;
+        }
+
+        body {
+            color: var(--ink);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #f7f8ff 0%, #fff 100%);
+        }
+
+        .navbar-blur {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-section {
+            padding-top: 7rem;
+            background: radial-gradient(circle at top left, rgba(30, 48, 243, 0.08), transparent 34%);
+        }
+
+        .hero-card,
+        .glass-card,
+        .feature-card,
+        .check-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
+        }
+
+        .hero-card {
+            border-radius: 1.5rem;
+        }
+
+        .glass-card,
+        .feature-card,
+        .check-card {
+            border-radius: 1.25rem;
+        }
+
+        .btn-glow {
+            color: #fff;
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            border: 0;
+            box-shadow: 0 10px 24px rgba(30, 48, 243, 0.2);
+        }
+
+        .btn-glow:hover,
+        .btn-glow:focus-visible {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            display: block;
+            width: 3.4rem;
+            height: 4px;
+            margin: 0.8rem auto 0;
+            content: "";
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-dashboard,
+        .screen-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            background: #fff8f8;
+        }
+
+        .hero-dashboard {
+            max-height: 42rem;
+            border-radius: 1.1rem;
+        }
+
+        .screen-image {
+            max-height: 32rem;
+            aspect-ratio: 9 / 16;
+        }
+
+        .screenshot-frame {
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 1rem;
+            background: #fff;
+        }
+
+        .feature-card {
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover,
+        .feature-card:focus-within {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 34px rgba(30, 48, 243, 0.12);
+        }
+
+        .feature-icon {
+            display: inline-grid;
+            width: 2.8rem;
+            height: 2.8rem;
+            color: #fff;
+            place-items: center;
+            border-radius: 0.85rem;
+            background: linear-gradient(135deg, var(--flutter-blue), var(--flutter-pink));
+        }
+
+        .code-card {
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            background: #f8fafc;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        code {
+            color: #1e293b;
+            font-family: Consolas, 'SFMono-Regular', monospace;
+            font-size: 0.9rem;
+        }
+
+        .flow-step {
+            height: 100%;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 0.9rem;
+            background: #fff;
+        }
+
+        .flow-arrow {
+            display: grid;
+            min-height: 2rem;
+            color: var(--flutter-blue);
+            place-items: center;
+            font-size: 1.25rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+            border-radius: 999px;
+        }
+
+        .status-verified {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .status-review {
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        .status-missing {
+            color: #991b1b;
+            background: #fee2e2;
+        }
+
+        .table th {
+            min-width: 9rem;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #f59e0b;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-section {
+                padding-top: 6rem;
+            }
+
+            .hero-card {
+                padding: 1.5rem !important;
+            }
+
+            .screen-image {
+                max-height: 28rem;
+            }
+
+            .mobile-flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 light-mode">
+    <a class="visually-hidden-focusable p-2 bg-white" href="#konten">Lewati ke konten utama</a>
+    <main id="konten" class="flex-shrink-0">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-blur py-3 shadow-sm">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">iMaIrsdyh</a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false"
+                    aria-label="Buka navigasi">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                        <li class="nav-item mx-2"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="about.html">About</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="projects.html">Projects</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link active" href="praktikum.html">Praktikum</a></li>
+                        <li class="nav-item mx-2"><a class="nav-link" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section py-5">
+            <div class="container px-4 px-lg-5">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb small mb-0">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="praktikum.html">Praktikum</a></li>
+                        <li class="breadcrumb-item"><a href="praktikum-mobile.html">Mobile Application</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Praktikum 5</li>
+                    </ol>
+                </nav>
+
+                <div class="row align-items-center g-4 g-lg-5">
+                    <div class="col-lg-7">
+                        <div class="hero-card p-4 p-md-5">
+                            <span class="badge bg-gradient-primary-to-secondary text-white mb-3">Final Project</span>
+                            <p class="text-uppercase small fw-bold text-muted mb-2">Praktikum Mobile Application 5</p>
+                            <h1 class="display-5 fw-bolder mb-3"><span class="text-gradient">Expense Tracker Final</span></h1>
+                            <p class="lead mb-3">Praktikum Mobile Application — Integrasi Praktikum 1–5 Menggunakan Flutter</p>
+                            <p class="text-muted mb-4">Expense Tracker Final merupakan aplikasi mobile untuk membantu pengguna mencatat pemasukan dan pengeluaran, melihat saldo keuangan, mengelola riwayat transaksi, serta menyimpan data secara lokal. Aplikasi ini merupakan integrasi hasil Praktikum Mobile Application 1–5.</p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge bg-light text-dark border">Flutter &amp; Dart</span>
+                                <span class="badge bg-light text-dark border">SQLite</span>
+                                <span class="badge bg-light text-dark border">Named Routes</span>
+                                <span class="badge bg-light text-dark border">BottomNavigationBar</span>
+                            </div>
+                            <div class="d-flex flex-column flex-sm-row flex-wrap gap-2">
+                                <a class="btn btn-glow px-4" href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/expense_tracker_final"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-brands fa-github me-2" aria-hidden="true"></i>Source Code Final
+                                </a>
+                                <a class="btn btn-outline-dark px-4" href="https://drive.google.com/drive/folders/1DcNtrkw-6epD6I1Bh_uvIWGLZgTpB0Pe"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-brands fa-google-drive me-2" aria-hidden="true"></i>Akses APK di Google Drive
+                                </a>
+                                <a class="btn btn-outline-primary px-4" href="https://www.youtube.com/watch?v=VIDEO_ID_GANTI_NANTI"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Video (Placeholder)
+                                </a>
+                            </div>
+                            <p class="small text-muted mt-3 mb-0">Tautan APK membuka folder Google Drive, bukan tautan unduhan langsung. Tautan video YouTube masih placeholder dan perlu diganti.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <figure class="glass-card p-3 mb-0">
+                            <img class="hero-dashboard" src="./assets/DASHBOARD.png"
+                                alt="Dashboard Expense Tracker menampilkan saldo dan daftar transaksi terbaru"
+                                fetchpriority="high">
+                            <figcaption class="small text-muted text-center pt-3">Dashboard Expense Tracker Final — salah satu dari delapan screenshot aplikasi yang tersedia.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tentang" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-4">
+                    <h2 class="display-6 fw-bold section-title">Tentang Project</h2>
+                    <p class="text-muted mx-auto" style="max-width: 52rem">Aplikasi ditujukan untuk membantu pencatatan keuangan pribadi. Catatan pemasukan disimpan sebagai nominal positif dan pengeluaran sebagai nominal negatif, sehingga saldo dapat dihitung dari transaksi yang tersimpan.</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-user-lock" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Akun lokal</h3><p class="text-muted mb-0">Register dan login menggunakan data akun pada SQLite lokal. Setiap akun memiliki ID pengguna.</p></article></div>
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Dashboard saldo</h3><p class="text-muted mb-0">Dashboard mengambil transaksi serta saldo akun yang sedang masuk, lalu menampilkan transaksi terbaru.</p></article></div>
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-money-bill-transfer" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Catat transaksi</h3><p class="text-muted mb-0">Pengguna dapat memilih jenis pemasukan/pengeluaran, judul, nominal, kategori, dan tanggal.</p></article></div>
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Riwayat &amp; detail</h3><p class="text-muted mb-0">Transaksi dapat ditampilkan kembali pada riwayat dan dibuka ke halaman detail.</p></article></div>
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Kategori &amp; tanggal</h3><p class="text-muted mb-0">Form menyediakan kategori sesuai jenis transaksi dan pemilihan tanggal.</p></article></div>
+                    <div class="col-md-6 col-lg-4"><article class="glass-card p-4 h-100"><span class="feature-icon mb-3"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></span><h3 class="h5 fw-bold">Navigasi utama</h3><p class="text-muted mb-0">BottomNavigationBar menghubungkan Beranda, Riwayat, dan Profil; layar tambahan dibuka melalui named route.</p></article></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="teknologi" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-4"><h2 class="display-6 fw-bold section-title">Teknologi yang Digunakan</h2></div>
+                <div class="table-responsive glass-card p-2 p-md-3">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead><tr><th scope="col">Teknologi</th><th scope="col">Peran dalam project</th></tr></thead>
+                        <tbody>
+                            <tr><th scope="row">Flutter &amp; Dart</th><td>Framework dan bahasa untuk membangun aplikasi mobile.</td></tr>
+                            <tr><th scope="row">Material Design 3</th><td>Widget Material dan tema aplikasi dengan <code>useMaterial3: true</code>.</td></tr>
+                            <tr><th scope="row">SQLite / sqflite</th><td>Penyimpanan lokal untuk tabel akun dan transaksi.</td></tr>
+                            <tr><th scope="row">crypto (SHA-256)</th><td>Menghasilkan digest SHA-256 dari password sebelum disimpan dan dicocokkan saat login. Implementasi ini tidak memakai salt dan bukan rekomendasi hashing untuk produksi.</td></tr>
+                            <tr><th scope="row">intl</th><td>Format angka nominal ke tampilan Rupiah dengan lokal Indonesia.</td></tr>
+                            <tr><th scope="row">path</th><td>Menyusun path database lokal.</td></tr>
+                            <tr><th scope="row">sqflite_common_ffi</th><td>Inisialisasi SQLite FFI untuk platform desktop yang didukung kode; target tugas tetap Android.</td></tr>
+                            <tr><th scope="row">Named routes</th><td>Destinasi bernama dipetakan melalui <code>onGenerateRoute</code> di <code>MaterialApp</code>.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted mt-3 mb-0">Daftar paket diverifikasi dari <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/blob/main/expense_tracker_final/pubspec.yaml" target="_blank" rel="noopener noreferrer">pubspec.yaml</a> dan sumber aplikasi. Tidak ada klaim Firebase, sinkronisasi cloud, atau autentikasi online.</p>
+            </div>
+        </section>
+
+        <section id="integrasi-praktikum" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-bold section-title">Integrasi Praktikum 1–5</h2>
+                    <p class="text-muted mx-auto" style="max-width: 52rem">Rangkaian praktikum berkembang dari dasar form dan widget hingga aplikasi yang terhubung dengan penyimpanan lokal serta navigasi. Deskripsi ini merujuk pada dokumentasi praktikum yang tersedia dan kode final.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100">
+                        <span class="badge bg-gradient-primary-to-secondary text-white mb-2">Praktikum 1</span>
+                        <h3 class="h4 fw-bold">Flutter Basic Form — Registrasi Pengguna</h3>
+                        <p class="text-muted">Tujuan dan konsep: membangun form pengguna, menerima input, memvalidasi field, serta menangani submit. Dokumentasi Praktikum 1 membahas form pendaftaran dasar.</p>
+                        <p class="text-muted">Integrasi final: form login/register menjadi pintu masuk aplikasi. Register memvalidasi input sebelum memanggil fungsi penyimpanan akun lokal.</p>
+                        <p class="small mb-2"><strong>Bukti/source:</strong> <code>expense_tracker_final/lib/screens/register_screen.dart</code>, <code>login_screen.dart</code>, dan <code>database/database_helper.dart</code>.</p>
+                        <a href="praktikum-mobile-application-1.html">Buka dokumentasi Praktikum 1</a> ·
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_application_1" target="_blank" rel="noopener noreferrer">Source latihan</a>
+                    </article></div>
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100">
+                        <span class="badge bg-gradient-primary-to-secondary text-white mb-2">Praktikum 2</span>
+                        <h3 class="h4 fw-bold">Widgets, State Management, Layouting &amp; Styling</h3>
+                        <p class="text-muted">Tujuan dan konsep: menyusun layar dengan widget Flutter, layout kolom/baris, kartu, list, serta mengubah tampilan ketika state berubah.</p>
+                        <p class="text-muted">Integrasi final: widget Material menyusun dashboard, daftar transaksi, navigasi tab, serta state tab aktif pada <code>MainScreen</code>. Rincian state dan fitur saldo pada latihan awal dapat dilihat pada dokumentasi praktikum.</p>
+                        <p class="small mb-2"><strong>Bukti/source:</strong> <code>screens/main_screen.dart</code>, <code>dashboard_screen.dart</code>, <code>transaction_history_screen.dart</code>.</p>
+                        <a href="praktikum-mobile-application-2.html">Buka dokumentasi Praktikum 2</a> ·
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_02practice" target="_blank" rel="noopener noreferrer">Source latihan</a>
+                    </article></div>
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100">
+                        <span class="badge bg-gradient-primary-to-secondary text-white mb-2">Praktikum 3</span>
+                        <h3 class="h4 fw-bold">Form Input &amp; Date Picker</h3>
+                        <p class="text-muted">Tujuan dan konsep: <code>Form</code>, <code>TextFormField</code>, validator, dropdown kategori, pengelolaan input, <code>showDatePicker()</code>, dan feedback setelah submit.</p>
+                        <p class="text-muted">Integrasi final: pola form dan validasi digunakan pada transaksi. Judul, nominal, jenis, kategori, dan tanggal divalidasi sebelum nilai disimpan ke SQLite.</p>
+                        <p class="small mb-2"><strong>Bukti/source:</strong> <code>screens/add_transaction_screen.dart</code> dan <code>models/transaction_model.dart</code>.</p>
+                        <a href="praktikum-mobile-application-3.html">Buka dokumentasi Praktikum 3</a> ·
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_03practice" target="_blank" rel="noopener noreferrer">Source latihan</a>
+                    </article></div>
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100">
+                        <span class="badge bg-gradient-primary-to-secondary text-white mb-2">Praktikum 4</span>
+                        <h3 class="h4 fw-bold">Navigasi, Stack &amp; Passing Data</h3>
+                        <p class="text-muted">Tujuan dan konsep: navigasi antarhalaman, route stack, <code>Navigator.push()</code>/<code>pop()</code>, constructor, passing data, form transaksi, dan tanggal.</p>
+                        <p class="text-muted">Integrasi final: dashboard/riwayat membuka halaman tambah atau detail dengan route bernama dan membawa object pengguna/transaksi sebagai argument.</p>
+                        <p class="small mb-2"><strong>Bukti/source:</strong> <code>main.dart</code>, <code>screens/dashboard_screen.dart</code>, <code>screens/transaction_history_screen.dart</code>, dan <code>screens/transaction_detail_screen.dart</code>.</p>
+                        <a href="praktikum-mobile-application-4.html">Buka dokumentasi Praktikum 4</a> ·
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_04practice" target="_blank" rel="noopener noreferrer">Source latihan</a>
+                    </article></div>
+                    <div class="col-12"><article class="glass-card p-4 p-lg-5">
+                        <span class="badge bg-gradient-primary-to-secondary text-white mb-2">Praktikum 5</span>
+                        <h3 class="h4 fw-bold">Named Routes &amp; Bottom Navigation Bar</h3>
+                        <p class="text-muted">Tujuan: menyentralisasi pembuatan halaman melalui named routes dan membuat navigasi tab utama memakai <code>StatefulWidget</code>, <code>_selectedIndex</code>, <code>setState()</code>, dan <code>BottomNavigationBar</code>.</p>
+                        <p class="text-muted">Implementasi final: tab Beranda, Riwayat, dan Profil ditampilkan dari <code>MainScreen</code>; tambah transaksi dan detail dibuka sebagai halaman terpisah. Perlu dicatat bahwa route final dikonfigurasi dengan <code>onGenerateRoute</code> dan mulai dari <code>/login</code>, bukan dengan route awal <code>/</code> dan map <code>routes</code> seperti bentuk contoh di spesifikasi.</p>
+                        <p class="small mb-2"><strong>Bukti/source:</strong> <code>expense_tracker_final/lib/main.dart</code>, <code>screens/main_screen.dart</code>, <code>screens/dashboard_screen.dart</code>.</p>
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_05practice" target="_blank" rel="noopener noreferrer">Source Praktikum 5</a> ·
+                        <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/expense_tracker_final" target="_blank" rel="noopener noreferrer">Source project final</a>
+                    </article></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="arsitektur-navigasi" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-bold section-title">Implementasi Arsitektur Navigasi</h2>
+                    <p class="text-muted">Cuplikan berikut disesuaikan dengan kode final yang tersedia, bukan contoh route yang tidak dipakai.</p>
+                </div>
+                <article class="glass-card p-4 p-lg-5 mb-4">
+                    <h3 class="h4 fw-bold">A. Named Routes</h3>
+                    <p class="text-muted">Pada <code>MaterialApp</code>, <code>initialRoute</code> menentukan layar pertama. Kode final memetakan rute bernama melalui <code>onGenerateRoute</code>, yang membuat route sesuai <code>settings.name</code> dan meneruskan arguments ke halaman yang memerlukannya.</p>
+                    <div class="code-card p-3"><pre><code>initialRoute: '/login',
+onGenerateRoute: (settings) {
+  switch (settings.name) {
+    case '/login':
+      return MaterialPageRoute(builder: (_) =&gt; const LoginScreen());
+    case '/register':
+      return MaterialPageRoute(builder: (_) =&gt; const RegisterScreen());
+    case '/home':
+      final user = settings.arguments as UserModel;
+      return MaterialPageRoute(builder: (_) =&gt; MainScreen(user: user));
+    case '/add':
+      final user = settings.arguments as UserModel;
+      return MaterialPageRoute(builder: (_) =&gt; AddTransactionScreen(user: user));
+    case '/detail':
+      final transaction = settings.arguments as TransactionModel;
+      return MaterialPageRoute(
+        builder: (_) =&gt; TransactionDetailScreen(transaction: transaction),
+      );
+  }
+}</code></pre></div>
+                    <p class="small text-muted mt-3 mb-0">Cuplikan diringkas; kode aktual memiliki route fallback ke Login. Tidak ada key <code>routes:</code> atau route <code>/</code> di konfigurasi final.</p>
+                </article>
+                <article class="glass-card p-4 p-lg-5 mb-4">
+                    <h3 class="h4 fw-bold">B. MainScreen dan BottomNavigationBar</h3>
+                    <p class="text-muted"><code>MainScreen</code> merupakan <code>StatefulWidget</code> yang menerima user. State memegang index terpilih dan daftar halaman Dashboard, Transaction History, serta Profile. <code>IndexedStack</code> menampilkan halaman sesuai index dan mempertahankan halaman lain di stack.</p>
+                    <div class="code-card p-3"><pre><code>int _selectedIndex = 0;
+late List&lt;Widget&gt; _pages;
+
+_pages = [
+  DashboardScreen(user: widget.user),
+  TransactionHistoryScreen(user: widget.user),
+  ProfileScreen(user: widget.user),
+];
+
+BottomNavigationBar(
+  currentIndex: _selectedIndex,
+  onTap: (index) =&gt; setState(() =&gt; _selectedIndex = index),
+  items: const [
+    BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Beranda'),
+    BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'Riwayat'),
+    BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profil'),
+  ],
+)</code></pre></div>
+                    <p class="small text-muted mt-3 mb-0">Source: <code>expense_tracker_final/lib/screens/main_screen.dart</code>.</p>
+                </article>
+                <article class="glass-card p-4 p-lg-5">
+                    <h3 class="h4 fw-bold">C. Navigasi Tambah Transaksi &amp; Detail</h3>
+                    <p class="text-muted">Tombol tambah membuka route <code>/add</code> dan meneruskan user. Riwayat atau dashboard dapat membuka route <code>/detail</code> dengan object transaksi.</p>
+                    <div class="code-card p-3"><pre><code>await Navigator.pushNamed(
+  context,
+  '/add',
+  arguments: widget.user,
+);
+
+Navigator.pushNamed(
+  context,
+  '/detail',
+  arguments: transaction,
+);</code></pre></div>
+                    <p class="text-muted mt-3 mb-0">Setelah penyimpanan, form menutup diri dan halaman asal memuat ulang data. Alur ini menghubungkan login/register, halaman utama bertab, tambah transaksi, detail, dan logout kembali ke Login.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="fitur" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-bold section-title">Fitur Aplikasi Expense Tracker</h2>
+                    <p class="text-muted">Semua file gambar berikut ditemukan di folder <code>assets/</code> website dan digunakan tanpa dipotong atau diregangkan.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/LOGIN.png" alt="Layar Login Expense Tracker dengan input email dan password" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Login</h3><p class="small text-muted mb-0">Email dan password divalidasi, lalu kredensial dicocokkan dengan akun lokal. Tautan Register tersedia.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/REGISTER.png" alt="Layar Register Expense Tracker untuk membuat akun pengguna" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Register</h3><p class="small text-muted mb-0">Form mencakup nama, email, password, dan konfirmasi password; akun disimpan melalui helper SQLite.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/DASHBOARD.png" alt="Dashboard keuangan menampilkan sapaan, saldo total, dan transaksi terbaru" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Dashboard Keuangan</h3><p class="small text-muted mb-0">Menampilkan nama pengguna, saldo hasil penjumlahan transaksi, transaksi terbaru, tombol tambah, dan navigasi bawah.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/TRANSAKSI_PEMASUKAN.png" alt="Form untuk memasukkan nominal, kategori, dan tanggal pemasukan" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Form Pemasukan</h3><p class="small text-muted mb-0">Memilih jenis Pemasukan, judul, nominal, kategori, dan tanggal sebelum menyimpan.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/TRANSAKSI_PENGELUARAN.png" alt="Form untuk memasukkan nominal, kategori, dan tanggal pengeluaran" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Form Pengeluaran</h3><p class="small text-muted mb-0">Memilih jenis Pengeluaran; nominal disimpan sebagai angka negatif. Pilihan kategori dan tanggal disediakan.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/RIWAYAT_TRANSAKSI.png" alt="Riwayat transaksi dengan judul, kategori, tanggal, dan nominal" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Riwayat Transaksi</h3><p class="small text-muted mb-0">Daftar transaksi tersimpan menampilkan judul, kategori, tanggal, dan nilai dengan warna berbeda untuk pemasukan/pengeluaran. Item membuka detail.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/DETAIL_TRANSAKSI.png" alt="Detail transaksi berisi nominal, kategori, tanggal, jenis, dan status" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Detail Transaksi</h3><p class="small text-muted mb-0">Menampilkan judul, nominal bertanda, kategori, tanggal, jenis, dan status tersimpan.</p></div></article></div>
+                    <div class="col-sm-6 col-lg-3"><article class="feature-card"><div class="screenshot-frame"><img class="screen-image" src="./assets/PROFIL.png" alt="Profil pengguna menampilkan nama, email, avatar, dan tombol logout" loading="lazy"></div><div class="p-3"><h3 class="h6 fw-bold">Profil Pengguna</h3><p class="small text-muted mb-0">Menampilkan nama dan email akun, avatar ikon, serta tombol Logout dengan konfirmasi.</p></div></article></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sqlite" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-bold section-title">Implementasi Local Storage dengan SQLite</h2>
+                    <p class="text-muted mx-auto" style="max-width: 55rem">Berbeda dari prototype yang hanya menyimpan data di state sementara, project menggunakan database lokal agar data dapat dibaca kembali setelah berpindah halaman atau aplikasi dibuka ulang. Klaim ini didasarkan pada kode SQLite; uji runtime Android belum dijalankan dalam tugas dokumentasi ini.</p>
+                </div>
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100"><h3 class="h5 fw-bold">Akun pengguna</h3><p class="text-muted mb-0">Tabel <code>users</code> menyimpan <code>name</code>, email unik tanpa membedakan kapitalisasi, <code>password_hash</code>, serta waktu pembuatan. Login mencari email dan SHA-256 password hash yang cocok. Password tidak disimpan sebagai teks biasa, tetapi SHA-256 tanpa salt belum setara dengan hashing adaptif yang direkomendasikan untuk aplikasi produksi.</p></article></div>
+                    <div class="col-lg-6"><article class="glass-card p-4 h-100"><h3 class="h5 fw-bold">Transaksi &amp; per akun</h3><p class="text-muted mb-0">Tabel <code>transactions</code> menyimpan <code>user_id</code>, judul, nilai integer, kategori, tanggal, dan waktu pembuatan. Query transaksi dan saldo dibatasi ke user ID yang aktif. Foreign key menghubungkan transaksi ke pengguna dan menghapus transaksi terkait saat akun dihapus.</p></article></div>
+                </div>
+                <div class="glass-card p-4 mb-4">
+                    <h3 class="h5 fw-bold">Skema yang ditemukan pada kode</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle mb-0">
+                            <thead><tr><th scope="col">Tabel</th><th scope="col">Kolom</th><th scope="col">Kunci/aturan</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row"><code>users</code></th><td><code>id</code>, <code>name</code>, <code>email</code>, <code>password_hash</code>, <code>created_at</code></td><td><code>id</code> primary key autoincrement; email <code>NOT NULL</code>, <code>UNIQUE</code>, <code>COLLATE NOCASE</code>.</td></tr>
+                                <tr><th scope="row"><code>transactions</code></th><td><code>id</code>, <code>user_id</code>, <code>title</code>, <code>amount</code>, <code>category</code>, <code>date</code>, <code>created_at</code></td><td><code>id</code> primary key autoincrement; <code>user_id</code> foreign key ke <code>users(id)</code> dengan <code>ON DELETE CASCADE</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4"><article class="glass-card p-4 h-100"><h3 class="h6 fw-bold">Penyimpanan &amp; retrieval</h3><p class="small text-muted mb-0">Register menambah user; form transaksi menginsert map transaksi. Query riwayat mengurutkan berdasarkan ID terbaru dan dashboard mengambil empat transaksi terakhir.</p></article></div>
+                    <div class="col-md-4"><article class="glass-card p-4 h-100"><h3 class="h6 fw-bold">Saldo</h3><p class="small text-muted mb-0">Nilai pemasukan positif, pengeluaran negatif. Database menghitung <code>SUM(amount)</code> untuk user ID aktif; saldo kosong menjadi nol melalui <code>COALESCE</code>.</p></article></div>
+                    <div class="col-md-4"><article class="glass-card p-4 h-100"><h3 class="h6 fw-bold">Status verifikasi</h3><p class="small text-muted mb-0">Struktur dan alur database diverifikasi dari source code. Skenario registrasi, login ulang, restart app, dan pemisahan data antar akun belum diuji saat perubahan halaman web ini dibuat.</p></article></div>
+                </div>
+                <div class="glass-card p-4">
+                    <h3 class="h5 fw-bold text-center mb-4">Alur Data</h3>
+                    <div class="row align-items-center g-2" aria-label="Diagram alur data dari input pengguna melalui SQLite hingga layar diperbarui">
+                        <div class="col-12 col-md"><div class="flow-step"><strong>Input pengguna</strong><br><span class="small text-muted">Register / transaksi</span></div></div>
+                        <div class="col-12 col-md-auto flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-md"><div class="flow-step"><strong>Validasi form</strong><br><span class="small text-muted">Periksa field wajib</span></div></div>
+                        <div class="col-12 col-md-auto flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-md"><div class="flow-step"><strong>SQLite</strong><br><span class="small text-muted">Simpan data lokal</span></div></div>
+                        <div class="col-12 col-md-auto flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-md"><div class="flow-step"><strong>Query data</strong><br><span class="small text-muted">Filter berdasarkan user ID</span></div></div>
+                        <div class="col-12 col-md-auto flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-md"><div class="flow-step"><strong>Perbarui layar</strong><br><span class="small text-muted">Dashboard / Riwayat / Detail</span></div></div>
+                    </div>
+                </div>
+                <p class="small text-muted mt-3">Source utama: <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/blob/main/expense_tracker_final/lib/database/database_helper.dart" target="_blank" rel="noopener noreferrer">lib/database/database_helper.dart</a> · <a href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/blob/main/expense_tracker_final/lib/models/transaction_model.dart" target="_blank" rel="noopener noreferrer">lib/models/transaction_model.dart</a>.</p>
+            </div>
+        </section>
+
+        <section id="alur-aplikasi" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-4"><h2 class="display-6 fw-bold section-title">Alur Navigasi Aplikasi</h2><p class="text-muted">Autentikasi, tab utama, dan layar tambahan dibedakan sesuai route dan source yang tersedia.</p></div>
+                <div class="glass-card p-4 p-lg-5">
+                    <div class="row g-3 align-items-stretch justify-content-center">
+                        <div class="col-12 col-sm-5 col-lg-2"><div class="flow-step"><span class="badge bg-secondary mb-2">Autentikasi</span><br><strong>Login</strong><br><span class="small text-muted">/login</span><br><a class="small" href="#fitur">Register ↔ /register</a></div></div>
+                        <div class="col-12 col-sm-1 flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-sm-5 col-lg-2"><div class="flow-step"><span class="badge bg-primary mb-2">Tab utama</span><br><strong>Beranda</strong><br><span class="small text-muted">Dashboard</span></div></div>
+                        <div class="col-12 col-sm-1 flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-sm-5 col-lg-2"><div class="flow-step"><span class="badge bg-primary mb-2">Tab utama</span><br><strong>Riwayat</strong><br><span class="small text-muted">Item → /detail</span></div></div>
+                        <div class="col-12 col-sm-1 flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+                        <div class="col-12 col-sm-5 col-lg-2"><div class="flow-step"><span class="badge bg-primary mb-2">Tab utama</span><br><strong>Profil</strong><br><span class="small text-muted">Logout → /login</span></div></div>
+                        <div class="col-12"><div class="flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-down"></i></div></div>
+                        <div class="col-12 col-sm-5 col-lg-3"><div class="flow-step"><span class="badge bg-info text-dark mb-2">Layar tambahan</span><br><strong>Tambah Transaksi</strong><br><span class="small text-muted">/add → simpan → kembali dan muat ulang</span></div></div>
+                        <div class="col-12 col-sm-1 flow-arrow mobile-flow-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-left"></i></div>
+                        <div class="col-12 col-sm-5 col-lg-3"><div class="flow-step"><span class="badge bg-info text-dark mb-2">Layar tambahan</span><br><strong>Detail Transaksi</strong><br><span class="small text-muted">/detail dengan transaction argument</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dokumentasi-tampilan" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-bold section-title">Dokumentasi Tampilan Aplikasi</h2>
+                    <p class="text-muted">Delapan screenshot potret yang disediakan tersedia di folder <code>assets/</code>; tidak perlu menyalin gambar tambahan.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/LOGIN.png" alt="Screenshot halaman Login Expense Tracker" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 1. Login</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/REGISTER.png" alt="Screenshot halaman Register Expense Tracker" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 2. Register</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/PROFIL.png" alt="Screenshot halaman Profil Pengguna" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 3. Profil Pengguna</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/TRANSAKSI_PEMASUKAN.png" alt="Screenshot formulir pemasukan" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 4. Form Pemasukan</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/TRANSAKSI_PENGELUARAN.png" alt="Screenshot formulir pengeluaran" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 5. Form Pengeluaran</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/RIWAYAT_TRANSAKSI.png" alt="Screenshot daftar riwayat transaksi" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 6. Riwayat Transaksi</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/DETAIL_TRANSAKSI.png" alt="Screenshot detail sebuah transaksi" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 7. Detail Transaksi</figcaption></figure></div>
+                    <div class="col-6 col-md-4 col-lg-3"><figure class="gallery-card p-2 h-100"><img class="screen-image rounded-3" src="./assets/DASHBOARD.png" alt="Screenshot dashboard keuangan" loading="lazy"><figcaption class="small text-center text-muted pt-2">Gambar 8. Dashboard</figcaption></figure></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="checklist" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-4"><h2 class="display-6 fw-bold section-title">Checklist Persyaratan Tugas Akhir</h2><p class="text-muted">Status berikut membedakan pemeriksaan source/screenshot dari uji runtime dan ketersediaan artefak akhir.</p></div>
+                <div class="table-responsive glass-card p-2 p-md-3">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead><tr><th scope="col">Persyaratan</th><th scope="col">Status</th><th scope="col">Dasar status / catatan</th></tr></thead>
+                        <tbody>
+                            <tr><td>Hasil Praktikum 1–5 digabungkan menjadi satu project.</td><td><span class="status status-verified">Terverifikasi</span></td><td>README project final menyatakan integrasi Praktikum 1–5; layar dan fungsi terkait ada di source final.</td></tr>
+                            <tr><td>Local storage digunakan untuk menyimpan data.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Helper membuat database SQLite dan melakukan insert/query. Uji restart belum dilakukan di sesi ini.</td></tr>
+                            <tr><td>Form Register tersedia.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Source Register dan screenshot tersedia.</td></tr>
+                            <tr><td>Form Login tersedia.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Source Login dan screenshot tersedia.</td></tr>
+                            <tr><td>Data akun disimpan secara lokal.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Register menyimpan user ke SQLite; password disimpan sebagai SHA-256 tanpa salt.</td></tr>
+                            <tr><td>Named Routes diterapkan.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Route dipetakan di <code>onGenerateRoute</code>. Implementasi aktual memakai <code>/login</code>, bukan contoh initial route <code>/</code> dan map <code>routes</code>.</td></tr>
+                            <tr><td>BottomNavigationBar diterapkan.</td><td><span class="status status-verified">Terverifikasi</span></td><td><code>MainScreen</code> berisi Beranda, Riwayat, dan Profil.</td></tr>
+                            <tr><td>Dashboard, Riwayat, dan Profil terintegrasi.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Ketiga halaman diberikan ke <code>IndexedStack</code> dari <code>MainScreen</code>.</td></tr>
+                            <tr><td>Data transaksi dapat disimpan dan ditampilkan kembali.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Insert dan query memakai SQLite, termasuk filter user ID; pengujian fungsional end-to-end masih disarankan.</td></tr>
+                            <tr><td>Video penjelasan aplikasi tersedia.</td><td><span class="status status-missing">Belum tersedia</span></td><td>Link saat ini hanya placeholder dan perlu diganti dengan link video YouTube asli.</td></tr>
+                            <tr><td>APK Android berhasil dibuat dan dapat diakses.</td><td><span class="status status-review">Perlu verifikasi</span></td><td><a href="https://drive.google.com/drive/folders/1DcNtrkw-6epD6I1Bh_uvIWGLZgTpB0Pe" target="_blank" rel="noopener noreferrer">Folder APK di Google Drive</a> diberikan, tetapi file dan status build di dalamnya belum diverifikasi. Ini bukan direct download link.</td></tr>
+                            <tr><td>Desain UI/UX sebelumnya dipertahankan, kecuali halaman Login dan Register.</td><td><span class="status status-review">Perlu verifikasi</span></td><td>Screenshot final tersedia, tetapi perbandingan visual seluruh layar dengan versi terdahulu belum dilakukan.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted mt-3 mb-0"><strong>Terverifikasi</strong> berarti didukung source atau screenshot yang diperiksa; bukan klaim bahwa seluruh pengujian manual telah dijalankan.</p>
+            </div>
+        </section>
+
+        <section id="video" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5 text-center">
+                <div class="glass-card p-4 p-lg-5">
+                    <span class="feature-icon mb-3"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span>
+                    <h2 class="display-6 fw-bold section-title">Video Demonstrasi Aplikasi</h2>
+                    <p class="text-muted mx-auto" style="max-width: 55rem">Video demonstrasi ini menjelaskan alur penggunaan Expense Tracker Final, mulai dari registrasi dan login, melihat dashboard keuangan, menambahkan pemasukan dan pengeluaran, memeriksa riwayat transaksi, hingga melihat profil pengguna.</p>
+                    <p class="alert alert-warning mx-auto" style="max-width: 46rem" role="status">Tautan video di bawah adalah placeholder, bukan video yang sudah dipublikasikan. Ganti <code>VIDEO_ID_GANTI_NANTI</code> dengan ID video YouTube demonstrasi yang sebenarnya.</p>
+                    <a class="btn btn-glow btn-lg px-4" href="https://www.youtube.com/watch?v=VIDEO_ID_GANTI_NANTI"
+                        target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Buka placeholder YouTube
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 text-center">
+                <div class="glass-card p-4">
+                    <h2 class="h4 fw-bold">Source Code &amp; Artefak</h2>
+                    <p class="text-muted">Repositori latihan Praktikum 5 dan project final tersedia terpisah.</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <a class="btn btn-outline-dark" href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/flutter_05practice" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github me-2" aria-hidden="true"></i>Source Praktikum 5</a>
+                        <a class="btn btn-glow" href="https://github.com/iMaIrsdyh/Flutter-Mobile-Application/tree/main/expense_tracker_final" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github me-2" aria-hidden="true"></i>Source Expense Tracker Final</a>
+                        <a class="btn btn-outline-dark" href="praktikum-mobile.html"><i class="fa-solid fa-arrow-left me-2" aria-hidden="true"></i>Kembali ke daftar Mobile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+        <div class="container px-4 px-lg-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0">Copyright &copy; iMa Irsdyh 2025</div></div>
+                <div class="col-auto"><a class="small footer-link text-decoration-none" href="contact.html">Contact</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="./js/javascript.js"></script>
+</body>
+
+</html>
