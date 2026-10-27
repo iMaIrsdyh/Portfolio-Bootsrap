@@ -309,12 +309,12 @@
                                     target="_blank" rel="noopener noreferrer">
                                     <i class="fa-brands fa-google-drive me-2" aria-hidden="true"></i>Akses APK di Google Drive
                                 </a>
-                                <a class="btn btn-outline-primary px-4" href="https://www.youtube.com/watch?v=VIDEO_ID_GANTI_NANTI"
+                                <a class="btn btn-outline-primary px-4" href="https://youtu.be/qjplhA_Vu00"
                                     target="_blank" rel="noopener noreferrer">
-                                    <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Video (Placeholder)
+                                    <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Tonton Video di YouTube
                                 </a>
                             </div>
-                            <p class="small text-muted mt-3 mb-0">Tautan APK membuka folder Google Drive, bukan tautan unduhan langsung. Tautan video YouTube masih placeholder dan perlu diganti.</p>
+                            <p class="small text-muted mt-3 mb-0">Tautan APK membuka folder Google Drive, bukan tautan unduhan langsung.</p>
                         </div>
                     </div>
                     <div class="col-lg-5">
@@ -617,7 +617,7 @@ Navigator.pushNamed(
                             <tr><td>BottomNavigationBar diterapkan.</td><td><span class="status status-verified">Terverifikasi</span></td><td><code>MainScreen</code> berisi Beranda, Riwayat, dan Profil.</td></tr>
                             <tr><td>Dashboard, Riwayat, dan Profil terintegrasi.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Ketiga halaman diberikan ke <code>IndexedStack</code> dari <code>MainScreen</code>.</td></tr>
                             <tr><td>Data transaksi dapat disimpan dan ditampilkan kembali.</td><td><span class="status status-verified">Terverifikasi</span></td><td>Insert dan query memakai SQLite, termasuk filter user ID; pengujian fungsional end-to-end masih disarankan.</td></tr>
-                            <tr><td>Video penjelasan aplikasi tersedia.</td><td><span class="status status-missing">Belum tersedia</span></td><td>Link saat ini hanya placeholder dan perlu diganti dengan link video YouTube asli.</td></tr>
+                            <tr><td>Video penjelasan aplikasi tersedia.</td><td><span class="status status-verified">Tersedia</span></td><td>Video demonstrasi dapat ditonton melalui tautan YouTube pada halaman ini.</td></tr>
                             <tr><td>APK Android berhasil dibuat dan dapat diakses.</td><td><span class="status status-review">Perlu verifikasi</span></td><td><a href="https://drive.google.com/drive/folders/1DcNtrkw-6epD6I1Bh_uvIWGLZgTpB0Pe" target="_blank" rel="noopener noreferrer">Folder APK di Google Drive</a> diberikan, tetapi file dan status build di dalamnya belum diverifikasi. Ini bukan direct download link.</td></tr>
                             <tr><td>Desain UI/UX sebelumnya dipertahankan, kecuali halaman Login dan Register.</td><td><span class="status status-review">Perlu verifikasi</span></td><td>Screenshot final tersedia, tetapi perbandingan visual seluruh layar dengan versi terdahulu belum dilakukan.</td></tr>
                         </tbody>
@@ -633,10 +633,15 @@ Navigator.pushNamed(
                     <span class="feature-icon mb-3"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span>
                     <h2 class="display-6 fw-bold section-title">Video Demonstrasi Aplikasi</h2>
                     <p class="text-muted mx-auto" style="max-width: 55rem">Video demonstrasi ini menjelaskan alur penggunaan Expense Tracker Final, mulai dari registrasi dan login, melihat dashboard keuangan, menambahkan pemasukan dan pengeluaran, memeriksa riwayat transaksi, hingga melihat profil pengguna.</p>
-                    <p class="alert alert-warning mx-auto" style="max-width: 46rem" role="status">Tautan video di bawah adalah placeholder, bukan video yang sudah dipublikasikan. Ganti <code>VIDEO_ID_GANTI_NANTI</code> dengan ID video YouTube demonstrasi yang sebenarnya.</p>
-                    <a class="btn btn-glow btn-lg px-4" href="https://www.youtube.com/watch?v=VIDEO_ID_GANTI_NANTI"
+                    <div class="ratio ratio-16x9 mx-auto mb-4" style="max-width: 55rem">
+                        <iframe src="https://www.youtube.com/embed/qjplhA_Vu00"
+                            title="Video Demonstrasi Aplikasi Expense Tracker Final"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <a class="btn btn-glow btn-lg px-4" href="https://youtu.be/qjplhA_Vu00"
                         target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Buka placeholder YouTube
+                        <i class="fa-brands fa-youtube me-2" aria-hidden="true"></i>Tonton Video di YouTube
                     </a>
                 </div>
             </div>
